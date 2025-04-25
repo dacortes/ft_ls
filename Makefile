@@ -55,14 +55,15 @@ libs:
 
 foo:
 	@echo $(OBJECTS)
+	@echo  $(DIRECTORY_SRC)
 
 $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) -o $(NAME)
 	@echo "\n✅ ==== $(BLUE)$(LIGTH)Project $(NAME) compiled!$(END) ==== ✅"
 
-$(DIRECTORY_OBJ)/%.o:$(DIRECTORY_SOURCE)/%.c
+$(DIRECTORY_OBJ)/%.o:$(DIRECTORY_SRC)/%.c
 	@printf "  $(LIGTH)Compiling $(BLUE)$<$(END)      "
-	@$(CPP) $(CFLAGS) $(INCLUDES) -MMD -MF $(DIRECTORY_DEP)/$*.d -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MF $(DIRECTORY_DEP)/$*.d -c $< -o $@
 	@$(call progress,$<)
 
 dir:
