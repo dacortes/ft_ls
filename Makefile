@@ -40,16 +40,19 @@ INCLUDES = $(addprefix -I, include)
 OBJECTS = $(addprefix $(DIRECTORY_OBJ)/, $(SOURCES:.c=.o))
 DEPENDENCIES = $(addprefix $(DIRECTORY_DEP)/, $(SOURCES:.c=.o))
 
+LIBFT = ./lib/libft/
+LIBFT_A = $(LIBFT)libft.a
+
 ################################################################################
 #                               MAKE RULES                                     #
 ################################################################################
 
 DIRS_TO_CREATE = $(DIRECTORY_OBJ) $(DIRECTORY_DEP)
-all: dir $(NAME)
+all: libft libs dir $(NAME)
 
 libft:
 	@if [ ! -d "./lib/libft/.git" ]; then \
-        git clone git@github.com:dacortes/minishell.git ./lib/; \
+        git clone git@github.com:dacortes/libft.git ./lib/libft; \
         git submodule update --init --recursive; \
     elif [ -d "./lib/libft/.git" ]; then \
         echo "$(YELLOW)$(LIGTH)[ Warnig ]$(END) libft: already exists and is a valid git repository."; \
@@ -58,10 +61,16 @@ libft:
     fi
 
 libs:
-	@echo "estoy haciendo los makes loco jajjjajajajajajjajaja"
+	make -C $(LIBFT) --no-print-directory
+
+libsclean:
+	make -C $(LIBFT) clean --no-print-directory
+
+libsfclean:
+	make -C $(LIBFT) fclean --no-print-directory
 
 $(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) $(LIBFT_A) -o $(NAME)
 	@echo "\n✅ ==== $(BLUE)$(LIGTH)Project $(NAME) compiled!$(END) ==== ✅"
 
 $(DIRECTORY_OBJ)/%.o:$(DIRECTORY_SRC)/%.c
@@ -80,7 +89,7 @@ dir:
 		fi \
 	done
 
-clean:
+clean: libsclean
 	@for DIR in $(DIRS_TO_CREATE); do \
 		if [ -d $$DIR ]; then \
 			$(RMV) $$DIR; \
@@ -91,7 +100,7 @@ clean:
 	done
 	echo "✅ ==== $(PURPLE)$(LIGTH)$(NAME) object files cleaned!$(END) ==== ✅"
 
-fclean: clean
+fclean: clean libsfclean
 	$(RMV) $(NAME)
 	echo "✅ ==== $(PURPLE)$(LIGTH)$(NAME) executable files and name cleaned!$(END) ==== ✅"
 
