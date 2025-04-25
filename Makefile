@@ -29,8 +29,8 @@ CFLAGS = -Wall -Wextra -Werror  -g #-fsanitize=address
 
 TOTAL_FILES = $(words $(SOURCES))
 
-DIRECTORY_OBJ = obj
-DIRECTORY_DEP = dep
+DIRECTORY_OBJ = .obj
+DIRECTORY_DEP = .dep
 DIRECTORY_SRC = src
 
 SUB_DIRECTORIES = 
@@ -48,14 +48,17 @@ DIRS_TO_CREATE = $(DIRECTORY_OBJ) $(DIRECTORY_DEP)
 all: dir $(NAME)
 
 libft:
-	@echo "estoy descargando la libft"
+	@if [ ! -d "./lib/libft/.git" ]; then \
+        git clone git@github.com:dacortes/minishell.git ./lib/; \
+        git submodule update --init --recursive; \
+    elif [ -d "./lib/libft/.git" ]; then \
+        echo "$(YELLOW)$(LIGTH)[ Warnig ]$(END) libft: already exists and is a valid git repository."; \
+    else \
+        echo "$(YELLOW)$(LIGTH)[ Warnig ]$(END) libft: already exists and is not an empty directory."; \
+    fi
 
 libs:
 	@echo "estoy haciendo los makes loco jajjjajajajajajjajaja"
-
-foo:
-	@echo $(OBJECTS)
-	@echo  $(DIRECTORY_SRC)
 
 $(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) -o $(NAME)
