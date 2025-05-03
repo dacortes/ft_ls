@@ -42,6 +42,7 @@ DEPENDENCIES = $(addprefix $(DIRECTORY_DEP)/, $(SOURCES:.c=.o))
 
 LIBFT = ./lib/libft/
 LIBFT_A = $(LIBFT)libft.a
+INCLUDES += -I$(LIBFT)
 
 ################################################################################
 #                               MAKE RULES                                     #
@@ -61,7 +62,7 @@ libft:
     fi
 
 libs:
-	make -C $(LIBFT) --no-print-directory
+	make bonus -C $(LIBFT) --no-print-directory
 
 libsclean:
 	make -C $(LIBFT) clean --no-print-directory
