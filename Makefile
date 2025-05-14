@@ -25,7 +25,7 @@ ITALIC = \033[3m
 NAME = ft_ls
 CC = gcc
 RMV = rm -rf
-CFLAGS = -Wall -Wextra -Werror  -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror  -g -fsanitize=address
 
 TOTAL_FILES = $(words $(SOURCES))
 
@@ -33,8 +33,8 @@ DIRECTORY_OBJ = .obj
 DIRECTORY_DEP = .dep
 DIRECTORY_SRC = src
 
-SUB_DIRECTORIES = 
-SOURCES = main.c
+SUB_DIRECTORIES = flag errors
+SOURCES = flag/flag.c errors/print_errors.c main.c
 
 INCLUDES = $(addprefix -I, include)
 OBJECTS = $(addprefix $(DIRECTORY_OBJ)/, $(SOURCES:.c=.o))
@@ -70,7 +70,7 @@ libsclean:
 libsfclean:
 	make -C $(LIBFT) fclean --no-print-directory
 
-$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS) Makefile
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) $(LIBFT_A) -o $(NAME)
 	@echo "\n✅ ==== $(BLUE)$(LIGTH)Project $(NAME) compiled!$(END) ==== ✅"
 

@@ -1,4 +1,4 @@
-
+# include "flag.h"
 /*
 	◦ write
 	◦ opendir
@@ -191,7 +191,28 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-// int main(int ac, char **av)
-// {
-// 	return (handle_parameters(ac, av));
-// }
+char *bool_to_text(unsigned int bol)
+{
+	if (bol == false)
+		return ("\033[1;31mfalse\033[m");
+	return ("\033[1;34mtrue\033[m");
+}
+
+void printf_value_flag(t_flags *flag)
+{
+	ft_printf("%sFLAGS\n%s", ORANGE, END);
+	ft_printf("\tl = %s\n", bool_to_text(flag->long_format));
+	ft_printf("\tR = %s\n", bool_to_text(flag->recursive));
+	ft_printf("\ta = %s\n", bool_to_text(flag->all));
+	ft_printf("\tr = %s\n", bool_to_text(flag->reverse));
+	ft_printf("\tt = %s\n", bool_to_text(flag->time));
+}
+
+int main(int ac, char **av)
+{
+	// return (handle_parameters(ac, av));
+	t_flags flags;
+	
+	has_flags(&flags, ac, &av[1]);
+	printf_value_flag(&flags);
+}

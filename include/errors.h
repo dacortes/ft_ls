@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag.h                                             :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/13 16:36:56 by dacortes         ###   ########.fr       */
+/*   Created: 2025/05/14 14:37:16 by dacortes          #+#    #+#             */
+/*   Updated: 2025/05/14 14:52:46 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ft_printf.h"
 
 #include <errno.h>
-#include <sys/stat.h>
+#include <stdio.h>
 
-short	has_flags(t_flags *flags, int num_args, char **args);
+/*	printf_errors.c	*/
+int	error_msg(int error, int code_exit, char *input);
