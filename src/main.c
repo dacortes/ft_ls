@@ -1,4 +1,6 @@
-# include "flag.h"
+#include "flag.h"
+#include "node.h"
+#include "print_values.h"
 /*
 	◦ write
 	◦ opendir
@@ -20,10 +22,6 @@
 	◦ exit
 */
 
-
-
-
-// #include <dirent.h>
 // #include "libft.h"
 // #include "ft_printf.h"
 // #include <string.h>
@@ -33,37 +31,6 @@
 // #define MAX_PATH 4096
 // #define ERROR -1
 
-// enum e_boolean
-// {
-// 	false,
-// 	true,
-// };
-
-// enum e_flags
-// {
-// 	long_format = 'l',
-// 	rec = 'R',
-// 	all = 'a',
-// 	reverse = 'r',
-// 	time = 't',
-// };
-
-// typedef struct s_file
-// {
-// 	char	*name;
-// 	int		type;
-// }	t_file;
-
-// "-l, -R, -a, -r and -t."
-
-// typedef struct s_flags
-// {
-// 	short	long_format;
-// 	short	recursive;
-// 	short	all;
-// 	short	reverse;
-// 	short	time;
-// }	t_flags;
 
 // char *get_type(int type)
 // {
@@ -160,59 +127,40 @@
 // 	return (false);
 // }
 
-// void has_flags(int num_args, char **args)
-// {
-// 	t_flags flags;
-// 	int iter;
-
-// 	iter = 0;
-// 	while (iter < num_args)
-// 	{
-// 		if (args[iter][0] && args[iter][0] == '-')
-// 		{	
-// 		}
-// 	}
-	
-// }
-
-// short current_directory(int num_args, char **args)
-// {
-// 	if (has_flags(num_args, args))
-// 	{
-// 		printf("Tengo flags\n");
-// 		// proccess_flags(num_args, args);
-// 	}
-// 	return (true);
-// }
-
-// short handle_parameters(int num_args, char **args)
-// {
-// 	current_directory(num_args, args);
-// 	return (EXIT_SUCCESS);
-// }
-
-char *bool_to_text(unsigned int bol)
-{
-	if (bol == false)
-		return ("\033[1;31mfalse\033[m");
-	return ("\033[1;34mtrue\033[m");
-}
-
-void printf_value_flag(t_flags *flag)
-{
-	ft_printf("%sFLAGS\n%s", ORANGE, END);
-	ft_printf("\tl = %s\n", bool_to_text(flag->long_format));
-	ft_printf("\tR = %s\n", bool_to_text(flag->recursive));
-	ft_printf("\ta = %s\n", bool_to_text(flag->all));
-	ft_printf("\tr = %s\n", bool_to_text(flag->reverse));
-	ft_printf("\tt = %s\n", bool_to_text(flag->time));
-}
-
 int main(int ac, char **av)
 {
-	// return (handle_parameters(ac, av));
 	t_flags flags;
 	
-	has_flags(&flags, ac, &av[1]);
+	if (has_flags(&flags, ac, &av[1]) == false)
+		ft_printf("enlisto sin flags\n");
 	printf_value_flag(&flags);
+	int i = 0;
+
+	t_stack stack;
+
+	ft_bzero(&stack, sizeof(t_stack));
+	while (i < 10)
+	{
+		t_node *new = ft_calloc(1, sizeof(t_node));
+		new->data = i + 1;
+		push_stack(&stack, new);
+		i++;
+	}
+	
+	t_node *iter = stack.top;
+	while (iter)
+	{
+		if (iter->prev)
+			ft_printf("soy la data del prev = %d\n", iter->prev->data);
+		ft_printf("data = %d\n", iter->data);
+		iter = iter->next;
+	}
+	i = stack.size;
+	while (i)
+	{
+		pop_stack(&stack);
+		i--;
+	}
+	
+	return (EXIT_SUCCESS);
 }

@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag.h                                             :+:      :+:    :+:   */
+/*   node.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/14 16:12:49 by dacortes         ###   ########.fr       */
+/*   Created: 2025/05/14 16:11:32 by dacortes          #+#    #+#             */
+/*   Updated: 2025/05/15 12:07:37 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#pragma once
-
-#include "libft.h"
-#include "global.h"
-#include "ft_printf.h"
-
-#include <errno.h>
-#include <sys/stat.h>
 
 /******************************************************************************/
 /*                            STRUCTURES                                      */
 /******************************************************************************/
 
-typedef struct s_flags			t_flags;
+#include <stdlib.h>
+#include <dirent.h>
 
-struct s_flags
+typedef struct s_node			t_node;
+typedef struct s_stack			t_stack;
+
+struct s_node
 {
-	short	long_format;
-	short	recursive;
-	short	all;
-	short	reverse;
-	short	time;
+	int		data;
+	t_node	*next;
+	t_node	*prev;
 };
 
-/*	flag.c	*/
-short	has_flags(t_flags *flags, int num_args, char **args);
+struct s_stack
+{
+	int		size;
+	t_node	*top;
+	t_node	*bot;
+};
+
+short	pop_stack(t_stack *stack);
+short	push_stack(t_stack *stack, t_node *new);

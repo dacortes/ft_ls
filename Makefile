@@ -33,8 +33,9 @@ DIRECTORY_OBJ = .obj
 DIRECTORY_DEP = .dep
 DIRECTORY_SRC = src
 
-SUB_DIRECTORIES = flag errors
-SOURCES = flag/flag.c errors/print_errors.c main.c
+SUB_DIRECTORIES = errors flag node print_values
+SOURCES = errors/print_errors.c flag/flag.c print_values/print_flags.c main.c \
+	node/handler_nodes.c
 
 INCLUDES = $(addprefix -I, include)
 OBJECTS = $(addprefix $(DIRECTORY_OBJ)/, $(SOURCES:.c=.o))

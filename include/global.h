@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:10:50 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/14 14:42:22 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:12:41 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,3 @@ enum e_flags
 	reverse = 'r',
 	time = 't',
 };
-
-typedef struct s_flags
-{
-	short	long_format;
-	short	recursive;
-	short	all;
-	short	reverse;
-	short	time;
-}	t_flags;
-
-void	printf_value_flag(t_flags *flag);

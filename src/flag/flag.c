@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:24:59 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/14 14:53:09 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:26:33 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ short	is_flag(char *arg)
 	iter = arg[0] == '-';
 	while (arg[iter])
 	{
-		if (arg[iter] != 'l' || arg[iter] != 'R' || arg[iter] != 'a'
-			|| arg[iter] != 'r' || arg[iter] != 't')
+		if (arg[iter] != 'l' && arg[iter] != 'R' && arg[iter] != 'a'
+			&& arg[iter] != 'r' && arg[iter] != 't')
 			return (false);
 		iter++;
 	}
