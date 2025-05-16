@@ -1,6 +1,9 @@
 #include "flag.h"
 #include "node.h"
+#include "errors.h"
 #include "print_values.h"
+#include "sort.h"
+
 /*
 	◦ write
 	◦ opendir
@@ -127,40 +130,108 @@
 // 	return (false);
 // }
 
+int	get_size_files(char **args)
+{
+	int	iter;
+	int	sizes;
+
+	if (!args)
+		return (-1);
+	iter = 0;
+	sizes = 0;
+	while (args[iter])
+	{
+		if (is_flag(args[iter]) == false)
+			sizes++;
+		iter++;
+	}
+	return (sizes);
+}
+
+short	add_array_files(char **src, char **dst)
+{
+	int		iter;
+	int		add;
+
+	if (!src || !dst)
+		return (EXIT_FAILURE);
+	add = 0;
+	iter = 0;
+	while (src[iter])
+	{
+		if (is_flag(src[iter]) == false)
+		{
+			dst[add] = src[iter];
+			add++;
+		}
+		iter++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+char **is_file(char **args)
+{
+	char	**files;
+	int		sizes;
+
+	if (!args)
+		return (NULL);
+	sizes = get_size_files(args);
+	files = ft_calloc(sizes + 1, sizeof(char *));
+	if (!files)
+		exit(error_msg(MALLOC, 1, "func: isfile() -> var: files"));
+	if (add_array_files(args, files) == EXIT_FAILURE)
+		return (NULL);
+	sort_files(files, sizes);
+	return (files);
+}
+
 int main(int ac, char **av)
 {
 	t_flags flags;
 	
-	if (has_flags(&flags, ac, &av[1]) == false)
+	char **files = NULL;
+	if (has_flags(&flags, ac, &av[1]) == false && ac == 1)
 		ft_printf("enlisto sin flags\n");
-	printf_value_flag(&flags);
-	int i = 0;
-
-	t_stack stack;
-
-	ft_bzero(&stack, sizeof(t_stack));
-	while (i < 10)
+	else
+		files = is_file(av);
+	if (!files)
+		return (0);
+	int iter = 0;
+	while (files[iter])
 	{
-		t_node *new = ft_calloc(1, sizeof(t_node));
-		new->data = i + 1;
-		push_stack(&stack, new);
-		i++;
+		ft_printf("*%s*\n", files[iter]);
+		iter++;
 	}
+	// ft_printf("%s\n", bool_to_text(is_flag("src")));
+	// printf_value_flag(&flags);
+	// int i = 0;
+
+	// t_stack stack;
+
+	// ft_bzero(&stack, sizeof(t_stack));
+	// while (i < 10)
+	// {
+	// 	t_node *new = ft_calloc(1, sizeof(t_node));
+	// 	new->data = i + 1;
+	// 	push_stack(&stack, new);
+	// 	i++;
+	// }
 	
-	t_node *iter = stack.top;
-	while (iter)
-	{
-		if (iter->prev)
-			ft_printf("soy la data del prev = %d\n", iter->prev->data);
-		ft_printf("data = %d\n", iter->data);
-		iter = iter->next;
-	}
-	i = stack.size;
-	while (i)
-	{
-		pop_stack(&stack);
-		i--;
-	}
+	// t_node *iter = stack.top;
+	// while (iter)
+	// {
+	// 	if (iter->prev)
+	// 		ft_printf("soy la data del prev = %d\n", iter->prev->data);
+	// 	ft_printf("data = %d\n", iter->data);
+	// 	iter = iter->next;
+	// }
+	// i = stack.size;
+	// while (i)
+	// {
+	// 	pop_stack(&stack);
+	// 	i--;
+	// }
 	
 	return (EXIT_SUCCESS);
 }

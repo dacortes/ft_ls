@@ -25,7 +25,7 @@ ITALIC = \033[3m
 NAME = ft_ls
 CC = gcc
 RMV = rm -rf
-CFLAGS = -Wall -Wextra -Werror  -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror  -g #-fsanitize=address
 
 TOTAL_FILES = $(words $(SOURCES))
 
@@ -33,9 +33,10 @@ DIRECTORY_OBJ = .obj
 DIRECTORY_DEP = .dep
 DIRECTORY_SRC = src
 
-SUB_DIRECTORIES = errors flag node print_values
+SUB_DIRECTORIES = errors flag node print_values sort
 SOURCES = errors/print_errors.c flag/flag.c print_values/print_flags.c main.c \
-	node/handler_nodes.c
+	node/handler_nodes.c \
+	sort/sort_files.c
 
 INCLUDES = $(addprefix -I, include)
 OBJECTS = $(addprefix $(DIRECTORY_OBJ)/, $(SOURCES:.c=.o))
