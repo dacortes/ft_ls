@@ -6,12 +6,12 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:24:59 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/16 11:16:53 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/18 17:04:05 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "flag.h"
 #include "errors.h"
+#include "arguments.h"
 
 /**
  * @brief Parses a string of flag characters and sets the corresponding fields
@@ -110,7 +110,7 @@ static short	analyze_args(t_flags *flags, int num_args, char **args)
 		if (args[iter] && args[iter][0] && args[iter][0] == '-')
 		{
 			if (is_flag(args[iter]) == false)
-				exit(error_msg(INVALID, 2, args[iter]));
+				exit(error_msg(INVALID, 2, args[iter], ""));
 			status = put_flags(flags, args[iter]) || false;
 		}
 		iter++;

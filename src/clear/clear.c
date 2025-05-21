@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_values.h                                     :+:      :+:    :+:   */
+/*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/21 11:29:01 by dacortes         ###   ########.fr       */
+/*   Created: 2025/05/17 10:51:36 by dacortes          #+#    #+#             */
+/*   Updated: 2025/05/17 11:04:17 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "clear.h"
 
-#include "arguments.h"
-#include "libft.h"
-#include "global.h"
-#include "ft_printf.h"
+short	clear_array(char **ptr)
+{
+	int	iter;
 
-#include <dirent.h>
-
-/*	print_values.c	*/
-char	*bool_to_text(unsigned int bool);
-void	printf_value_flag(t_flags *flag);
-short	print_array_files(char **files);
-char	*get_type_dir(int type);
+	if (!ptr || !*ptr)
+		return (false);
+	iter = 0;
+	while (ptr[iter])
+	{
+		free(ptr[iter]);
+		ptr[iter] = NULL;
+		iter++;
+	}
+	free(ptr);
+	return (true);
+}

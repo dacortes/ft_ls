@@ -1,8 +1,9 @@
-#include "flag.h"
 #include "node.h"
+#include "clear.h"
 #include "errors.h"
+#include "arguments.h"
 #include "print_values.h"
-#include "sort.h"
+
 
 /*
 	◦ write
@@ -27,211 +28,156 @@
 
 // #include "libft.h"
 // #include "ft_printf.h"
-// #include <string.h>
 // #include <errno.h>
-// #include <sys/stat.h>
+#include <pwd.h>
+#include <string.h>
+#include <sys/stat.h>
 
-// #define MAX_PATH 4096
-// #define ERROR -1
-
-
-// char *get_type(int type)
+// short	loop_recursive(t_flags flags, t_stack *stack)
 // {
-// 	if (type == DT_DIR)
-// 		return ("directory");
-// 	else if (type == DT_REG)
-// 		return ("regular file");
-// 	else if (type == DT_LNK)
-// 		return ("symbolic link");
-// 	else if (type == DT_FIFO)
-// 		return ("FIFO/pipe");
-// 	else if (type == DT_SOCK)
-// 		return ("socket");
-// 	else if (type == DT_CHR)
-// 		return ("character device");
-// 	else if (type == DT_BLK)
-// 		return ("block device");
-// 	else
-// 		return ("unknown type");
-// }
+// 	t_node	*curr;
+// 	t_node	*add;
+// 	DIR		*dir;
+// 	short	status;
 
-// void print_content(void *content)
-// {
-// 	t_file *file;
-
-// 	file = (t_file *)content;
-// 	fd_printf(1, "%s ", file->name);
-// 	fd_printf(1, "%s\n", get_type(file->type));
-// }
-
-// t_file *new_file(char *name, int type)
-// {
-// 	t_file *file;
-
-// 	file = ft_calloc(sizeof(t_file), 1);
-// 	if (!file)
-// 		exit(1);
-// 	file->name = name;
-// 	file->type = type;
-// 	return (file);
-// }
-
-// void free_file(void *content)
-// {
-// 	t_file *file;
-
-// 	file = (t_file *)content;
-// 	if (file->name)
-// 		free(file->name);
-// 	free(file);
-// }
-
-// int main(void)
-// {
-// 	struct dirent	*entry;
-// 	DIR				*dir;
-// 	t_list			*files;
-
-// 	char  *path = "test";
-// 	dir  = opendir(path);
-// 	if (dir == NULL)
+// 	(void)flags;
+// 	status = EXIT_SUCCESS;
+// 	dir = NULL;
+// 	while (stack->size > 0)
 // 	{
-// 		fd_printf(2, "cannot access: '%s': %s\n", path, strerror(errno));
-// 		return (2);
+// 		curr = copy_node(stack, true);
+// 		ft_printf("file name %s\n", curr->entry->d_name);
+// 		status = init_struct_dirent(&curr, dir, curr->entry->d_name);
+// 		if (status == 2)
+// 			stack->status = status;
+// 		while (status != end_dir)
+// 		{
+// 			if (default_directories(curr->entry->d_name, curr->entry->d_type))
+// 				continue ;
+// 			if (curr->entry->d_type == DT_DIR)
+// 			{
+// 					add = ft_calloc(1, sizeof(t_node));
+// 					if (!add)
+// 						exit(error_msg(MALLOC, 1, "exec_recursive_flag", ""));
+// 					status = init_struct_dirent(&add, dir, add->entry->d_name);
+// 					push_stack(stack, add);
+// 					ft_printf("+++++++++++++++++++++++++\n");
+// 			}
+// 		}
+// 		free(curr->entry);
+// 		free(curr);
 // 	}
-// 	files = NULL;
-// 	int num_dirs = 0;
-// 	while (true)
-// 	{
-// 		entry = readdir(dir);
-// 		if (entry->d_type == DT_DIR && (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0))
-// 			num_dirs++;
-// 		if (entry == NULL)
-// 			break;
-// 		ft_lstadd_back(&files, ft_lstnew(new_file(ft_strdup(entry->d_name), entry->d_type)));
-// 	}
-// 	ft_lstiter(files, print_content);
-// 	ft_lstclear(&files, free_file);
-// 	fd_printf(1, "\n");
-// 	closedir(dir);
-//     return (0);
-// }
-// short is_directory(char *arg)
-// {
-// 	struct stat sb;
-
-// 	if (stat(arg, &sb) == -1)
-// 	{
-// 		fd_printf(2, "cannot access: '%s': %s\n", arg, strerror(errno));
-// 		return (false);
-// 	}
-// 	if (S_ISDIR(sb.st_mode))
-// 		return (true);
-// 	return (false);
+// 	return (true);
 // }
 
-int	get_size_files(char **args)
+DIR	*init_dir(char *file)
 {
-	int	iter;
-	int	sizes;
+	DIR *dir;
 
-	if (!args)
-		return (-1);
-	iter = 0;
-	sizes = 0;
-	while (args[iter])
-	{
-		if (is_flag(args[iter]) == false)
-			sizes++;
-		iter++;
-	}
-	return (sizes);
+	dir = opendir(file);
+	if (!dir)
+		return (error_msg(OPEN_DIR, 2, file, strerror(errno)), NULL);
+	return (dir);
 }
 
-short	add_array_files(char **src, char **dst)
+short	is_readdir(struct dirent **entry, DIR		*dir)
 {
-	int		iter;
-	int		add;
+	*entry = readdir(dir);
+	if (!*entry)
+		return (false);
+	return (true);
+}
 
-	if (!src || !dst)
-		return (EXIT_FAILURE);
-	add = 0;
-	iter = 0;
-	while (src[iter])
+short	loop_recursive(t_flags flags, t_stack *stack)
+{
+	t_node	*curr;
+	t_node	*add;
+	DIR		*dir;
+	struct dirent *entry;
+
+	(void)flags;
+	while (stack->size > 0)
 	{
-		if (is_flag(src[iter]) == false)
+		curr = copy_node(stack, true);
+		ft_printf("Exploring: %s\n", curr->entry->d_name);
+
+		dir = init_dir(curr->entry->d_name);
+		if (!dir)
+			continue ;
+
+		while (is_readdir(&entry, dir))
 		{
-			dst[add] = src[iter];
-			add++;
+			if (default_directories(entry->d_name, entry->d_type))
+				continue;
+
+			char *tmp = ft_addend_char(curr->entry->d_name, '/');
+			char *full_path = ft_strjoin(tmp, entry->d_name);
+			if (tmp)
+				free(tmp);
+			if (entry->d_type == DT_DIR)
+			{
+				add = ft_calloc(1, sizeof(t_node));
+				if (!add)
+					exit(error_msg(MALLOC, 1, "loop_recursive", ""));
+				// copy_struct_dirent(entry, &add->entry);
+				add->entry = ft_calloc(1, sizeof(struct dirent) + strlen(full_path) + 1);
+                ft_strcpy(add->entry->d_name, full_path);
+				push_stack(stack, add);
+				ft_printf("Added directory to stack: %s\n", entry->d_name);
+			}
+			else
+			{
+				ft_printf("File: %s\n", entry->d_name);
+			}
+			if (full_path)
+				free(full_path);
 		}
-		iter++;
+
+		closedir(dir);
+		free(curr->entry);
+		free(curr);
 	}
-	return (EXIT_SUCCESS);
+	return (true);
 }
 
-char **is_file(char **args)
-{
-	char	**files;
-	int		sizes;
 
-	if (!args)
-		return (NULL);
-	sizes = get_size_files(args);
-	files = ft_calloc(sizes + 1, sizeof(char *));
-	if (!files)
-		exit(error_msg(MALLOC, 1, "func: isfile() -> var: files"));
-	if (add_array_files(args, files) == EXIT_FAILURE)
-		return (NULL);
-	sort_files(files, sizes);
-	return (files);
+short	exec_recursive_flag(t_flags flags, char *start_dir)
+{
+	t_stack	stack;
+	t_node	*root;
+
+	if (!start_dir)
+		return (false);
+	ft_bzero(&stack, sizeof(t_stack));
+	root = ft_calloc(1, sizeof(t_node));
+	if (!root)
+		exit(error_msg(MALLOC, 1, "exec_recursive_flag", ""));
+    root->entry = ft_calloc(1, sizeof(struct dirent) \
+		+ ft_strlen(start_dir) + 1);
+	if (!root)
+		exit(error_msg(MALLOC, 1, "exec_recursive_flag", ""));
+    ft_strcpy(root->entry->d_name, start_dir);
+	push_stack(&stack, root);
+	loop_recursive(flags, &stack);
+	clear_stack(&stack);
+	return (stack.status);
 }
 
 int main(int ac, char **av)
 {
 	t_flags flags;
+	char	**files;
 	
-	char **files = NULL;
+	files = NULL;
 	if (has_flags(&flags, ac, &av[1]) == false && ac == 1)
 		ft_printf("enlisto sin flags\n");
 	else
-		files = is_file(av);
+		files = is_file(&av[1]);
 	if (!files)
 		return (0);
-	int iter = 0;
-	while (files[iter])
-	{
-		ft_printf("*%s*\n", files[iter]);
-		iter++;
-	}
-	// ft_printf("%s\n", bool_to_text(is_flag("src")));
-	// printf_value_flag(&flags);
-	// int i = 0;
 
-	// t_stack stack;
-
-	// ft_bzero(&stack, sizeof(t_stack));
-	// while (i < 10)
-	// {
-	// 	t_node *new = ft_calloc(1, sizeof(t_node));
-	// 	new->data = i + 1;
-	// 	push_stack(&stack, new);
-	// 	i++;
-	// }
-	
-	// t_node *iter = stack.top;
-	// while (iter)
-	// {
-	// 	if (iter->prev)
-	// 		ft_printf("soy la data del prev = %d\n", iter->prev->data);
-	// 	ft_printf("data = %d\n", iter->data);
-	// 	iter = iter->next;
-	// }
-	// i = stack.size;
-	// while (i)
-	// {
-	// 	pop_stack(&stack);
-	// 	i--;
-	// }
-	
+	exec_recursive_flag(flags, files[0]);
+	print_array_files(files);
+	clear_array(files);
 	return (EXIT_SUCCESS);
 }

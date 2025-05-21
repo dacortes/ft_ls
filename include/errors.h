@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:37:16 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/14 14:52:46 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/18 16:03:12 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,4 @@
 #include <stdio.h>
 
 /*	printf_errors.c	*/
-int	error_msg(int error, int code_exit, char *input);
+int	error_msg(int error, int code_exit, char *input, char *er_no);

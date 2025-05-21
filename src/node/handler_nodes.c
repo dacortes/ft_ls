@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:15:44 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/15 12:07:50 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/21 09:50:50 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 short	pop_stack(t_stack *stack)
 {
-	t_node *temp;
+	t_node	*temp;
 
 	if (!stack || !stack->top)
 		return (EXIT_FAILURE);
@@ -29,6 +29,8 @@ short	pop_stack(t_stack *stack)
 		while (stack->bot->next)
 			stack->bot = stack->bot->next;
 	}
+	if (temp->entry)
+		free(temp->entry);
 	free(temp);
 	stack->size--;
 	return (EXIT_SUCCESS);
@@ -52,4 +54,18 @@ short	push_stack(t_stack *stack, t_node *new)
 	}
 	stack->size++;
 	return (EXIT_SUCCESS);
+}
+
+t_node	*copy_node(t_stack *stack, short do_free)
+{
+	t_node	*copy;
+
+	if (!stack || !stack->top)
+		return (ft_printf(WARNING_POINTER, YELLOW, END, \
+			"copy_node", "stack"), NULL);
+	copy = ft_calloc(1, sizeof(t_node));
+	copy_struct_dirent(stack->top->entry, &copy->entry);
+	if (do_free == true)
+		pop_stack(stack);
+	return (copy);
 }

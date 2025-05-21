@@ -33,10 +33,15 @@ DIRECTORY_OBJ = .obj
 DIRECTORY_DEP = .dep
 DIRECTORY_SRC = src
 
-SUB_DIRECTORIES = errors flag node print_values sort
-SOURCES = errors/print_errors.c flag/flag.c print_values/print_flags.c main.c \
-	node/handler_nodes.c \
-	sort/sort_files.c
+SUB_DIRECTORIES = arguments clear errors node print_values sort
+SOURCES = \
+	arguments/files.c arguments/flag.c \
+	clear/clear.c \
+	errors/print_errors.c \
+	print_values/print_flags.c \
+	node/clear.c node/handler_nodes.c node/handler_data.c\
+	sort/sort_files.c \
+	main.c
 
 INCLUDES = $(addprefix -I, include)
 OBJECTS = $(addprefix $(DIRECTORY_OBJ)/, $(SOURCES:.c=.o))

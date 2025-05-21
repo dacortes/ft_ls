@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag.h                                             :+:      :+:    :+:   */
+/*   arguments.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/15 12:44:24 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:27:02 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 #include <errno.h>
 #include <sys/stat.h>
+#include <pwd.h>
+#include <string.h>
 
 /******************************************************************************/
 /*                            STRUCTURES                                      */
@@ -37,3 +39,6 @@ struct s_flags
 /*	flag.c	*/
 short	is_flag(char *arg);
 short	has_flags(t_flags *flags, int num_args, char **args);
+
+/*	file.c	*/
+char	**is_file(char **args);

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:10:50 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/14 16:12:41 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/21 16:01:22 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define FT_LS "\033[1;31mft_ls: \033[m"
 # define ERR_MALLOC "%serror trying to allocate memory `%s'\n"
 # define ERR_INVALID "%sinvalid option -- '%s'\n"
+# define ERR_OPEN "%scannot open directory '%s':%s\n"
+# define WARNING_POINTER "%sWarning%s: func: %s pointer %s are null\n"
 
 /******************************************************************************/
 /*                            STRUCTURES                                      */
@@ -41,11 +43,21 @@ enum e_boolean
 	true,
 };
 
+enum e_dir
+{
+	dir,
+	dir_link,
+	file,
+	end_dir,
+};
+
 enum e_errors
 {
+	ERROR = -1,
 	MALLOC = 1,
 	INVALID = 1 << 2,
 	PERROR = 1 << 3,
+	OPEN_DIR = 1 << 4,
 };
 
 enum e_flags
