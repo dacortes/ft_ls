@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:53:19 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/24 12:19:56 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:13:21 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	partition_entries(struct dirent **arr, int low, int high, t_flags flags)
 			cmp = -cmp;
 		if (cmp < 0)
 		{
-			swap_ptr((void **)&arr[i + 1], (void **)&arr[high]);
 			i++;
+			swap_ptr((void **)&arr[i], (void **)&arr[j]);
 		}
 		j++;
 	}
