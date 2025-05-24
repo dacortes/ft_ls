@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/21 11:27:02 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:31:05 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ struct s_flags
 	short	all;
 	short	reverse;
 	short	time;
+	char	*cur_dir;
 };
 
 /*	flag.c	*/

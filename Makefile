@@ -43,9 +43,9 @@ SOURCES = \
 	sort/quicksort.c sort/sort_files.c\
 	main.c
 
-INCLUDES = $(addprefix -I, include)
+INCLUDES = $(addprefix -I, ./include)
 OBJECTS = $(addprefix $(DIRECTORY_OBJ)/, $(SOURCES:.c=.o))
-DEPENDENCIES = $(addprefix $(DIRECTORY_DEP)/, $(SOURCES:.c=.o))
+DEPENDENCIES = $(addprefix $(DIRECTORY_DEP)/, $(SOURCES:.c=.d))
 
 LIBFT = ./lib/libft/
 LIBFT_A = $(LIBFT)libft.a
@@ -77,11 +77,11 @@ libsclean:
 libsfclean:
 	make -C $(LIBFT) fclean --no-print-directory
 
-$(NAME): $(OBJECTS) Makefile
+$(NAME): $(OBJECTS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) $(LIBFT_A) -o $(NAME)
 	@echo "\n✅ ==== $(BLUE)$(LIGTH)Project $(NAME) compiled!$(END) ==== ✅"
 
-$(DIRECTORY_OBJ)/%.o:$(DIRECTORY_SRC)/%.c
+$(DIRECTORY_OBJ)/%.o:$(DIRECTORY_SRC)/%.c Makefile
 	@printf "  $(LIGTH)Compiling $(BLUE)$<$(END)      "
 	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MF $(DIRECTORY_DEP)/$*.d -c $< -o $@
 	@$(call progress,$<)

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 15:53:19 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/24 13:13:21 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:15:16 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int	compare_by_time(const void *a, const void *b)
 
 	entry1 = (struct dirent *)a;
 	entry2 = (struct dirent *)b;
-	stat(entry1->d_name, &stat1);
-	stat(entry2->d_name, &stat2);
+	if (stat(entry1->d_name, &stat1) == ERROR ||
+		stat(entry2->d_name, &stat2) == ERROR)
+		return (0);
 	if (stat1.st_mtime > stat2.st_mtime)
 		return (-1);
 	else if (stat1.st_mtime < stat2.st_mtime)
