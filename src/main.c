@@ -1,8 +1,8 @@
-#include "node.h"
 #include "clear.h"
 #include "errors.h"
 #include "arguments.h"
 #include "print_values.h"
+#include "sort.h"
 
 
 /*
@@ -92,7 +92,7 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 		if (!dir)
 			continue ;
 		entry_count = read_dir_entries(dir, &entries);
-		//ordenar todo si tiene flags
+		sort_entries(entries, entry_count, flags);
 		i = 0;
 		while (i < entry_count)
 		{

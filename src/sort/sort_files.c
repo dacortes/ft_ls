@@ -5,66 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 11:53:07 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/16 12:29:40 by dacortes         ###   ########.fr       */
+/*   Created: 2025/05/23 15:53:19 by dacortes          #+#    #+#             */
+/*   Updated: 2025/05/24 12:19:56 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sort.h"
 
-/**
- * swap_ptr - Swaps the values of two pointers.
- * @a: A pointer to the first pointer to be swapped.
- * @b: A pointer to the second pointer to be swapped.
- *
- * This function exchanges the values of the two pointers
- * passed as arguments. It is useful for swapping pointers
- * in sorting algorithms or other pointer manipulation tasks.
- */
-void	swap_ptr(void **a, void **b)
+int	compare_by_name(const void *a, const void *b)
 {
-	void	*temp;
+	struct dirent	*entry1;
+	struct dirent	*entry2;
 
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	entry1 = (struct dirent *)a;
+	entry2 = (struct dirent *)b;
+	return (ft_strncmp(entry1->d_name, entry2->d_name, -1));
 }
 
-/**
- * partition - Partitions an array of strings for quicksort.
- *
- * This function rearranges the elements of the array such that all elements
- * less than the pivot are placed before it, and all elements greater than
- * the pivot are placed after it. The pivot is chosen as the last element
- * in the array.
- *
- * @param arr: The array of strings to be partitioned.
- * @param low: The starting index of the portion of the array to partition.
- * @param high: The ending index of the portion of the array to partition.
- *
- * @return The index of the pivot element after partitioning.
- *
- * Note:
- * - The function uses `ft_strncmp` to compare strings.
- * - The `swap_ptr` function is used to swap elements in the array.
- * - The comparison assumes that `ft_strncmp` can handle a negative value
- *   for the length parameter to compare entire strings.
- */
-int	partition(char **arr, int low, int high)
+int	compare_by_time(const void *a, const void *b)
 {
-	char	*pivot;
-	int		i;
-	int		j;
+	struct dirent	*entry1;
+	struct dirent	*entry2;
+	struct stat		stat1;
+	struct stat		stat2;
 
-	i = low - 1;
+	entry1 = (struct dirent *)a;
+	entry2 = (struct dirent *)b;
+	stat(entry1->d_name, &stat1);
+	stat(entry2->d_name, &stat2);
+	if (stat1.st_mtime > stat2.st_mtime)
+		return (-1);
+	else if (stat1.st_mtime < stat2.st_mtime)
+		return (1);
+	return (0);
+}
+
+int	partition_entries(struct dirent **arr, int low, int high, t_flags flags)
+{
+	struct dirent	*pivot;
+	int				cmp;
+	int				i;
+	int				j;
+
+	i = low -1;
 	j = low;
 	pivot = arr[high];
 	while (j < high)
 	{
-		if (ft_strncmp(arr[j], pivot, -1) < 0)
+		if (flags.time)
+			cmp = compare_by_time((void *)arr[j], (void *)pivot);
+		else
+			cmp = compare_by_name((void *)arr[j], (void *)pivot);
+		if (flags.reverse)
+			cmp = -cmp;
+		if (cmp < 0)
 		{
+			swap_ptr((void **)&arr[i + 1], (void **)&arr[high]);
 			i++;
-			swap_ptr((void **)&arr[i], (void **)&arr[j]);
 		}
 		j++;
 	}
@@ -72,29 +69,23 @@ int	partition(char **arr, int low, int high)
 	return (i + 1);
 }
 
-/**
- * quicksort - Sorts an array of strings using the Quick Sort algorithm.
- * 
- * @arr: The array of strings to be sorted.
- * @low: The starting index of the portion of the array to be sorted.
- * @high: The ending index of the portion of the array to be sorted.
- * 
- * This function recursively sorts the array by partitioning it into two
- * subarrays around a pivot element. Elements less than the pivot are moved
- * to the left subarray, and elements greater than the pivot are moved to
- * the right subarray. The process is repeated for each subarray until the
- * entire array is sorted.
- */
-void	quicksort(char **arr, int low, int high)
+void	quicksort_entries(struct dirent **src, int low, int high, t_flags flags)
 {
-	int	index;
+	int	pivot_index;
 
 	if (low < high)
 	{
-		index = partition(arr, low, high);
-		quicksort(arr, low, index - 1);
-		quicksort(arr, index + 1, high);
+		pivot_index = partition_entries(src, low, high, flags);
+		quicksort_entries(src, low, pivot_index - 1, flags);
+		quicksort_entries(src, pivot_index + 1, high, flags);
 	}
+}
+
+void	sort_entries(struct dirent **entries, int count, t_flags flags)
+{
+	if (!entries || count <= 1)
+		return ;
+	quicksort_entries(entries, 0, count - 1, flags);
 }
 
 void	sort_files(char **files, int size)

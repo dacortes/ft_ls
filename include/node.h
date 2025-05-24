@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:11:32 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/21 16:02:24 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:58:25 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
+#include <dirent.h>
 #include <sys/stat.h>
 
 #include "libft.h"
