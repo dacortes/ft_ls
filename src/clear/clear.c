@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 10:51:36 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/17 11:04:17 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/25 18:09:05 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,23 @@ short	clear_array(char **ptr)
 		iter++;
 	}
 	free(ptr);
+	return (true);
+}
+
+short	clear_entries(struct dirent **entries, int size, short is_loop)
+{
+	int	iter;
+
+	if (!entries || !*entries)
+		return (false);
+	iter = 0;
+	while (iter < size)
+	{
+		free(entries[iter]);
+		entries[iter] = NULL;
+		iter++;
+	}
+	if (is_loop == false)
+		free(entries);
 	return (true);
 }

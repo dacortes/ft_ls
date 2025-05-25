@@ -35,7 +35,7 @@ DIRECTORY_SRC = src
 
 SUB_DIRECTORIES = arguments clear errors node print_values sort
 SOURCES = \
-	arguments/files.c arguments/flag.c \
+	arguments/entries.c arguments/files.c arguments/flag.c \
 	clear/clear.c \
 	errors/print_errors.c \
 	print_values/print_flags.c \

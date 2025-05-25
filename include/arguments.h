@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/24 15:31:05 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/25 17:49:51 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include "global.h"
 #include "ft_printf.h"
 
-#include <errno.h>
-#include <sys/stat.h>
 #include <pwd.h>
+#include <errno.h>
 #include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 /******************************************************************************/
 /*                            STRUCTURES                                      */
@@ -34,12 +35,19 @@ struct s_flags
 	short	all;
 	short	reverse;
 	short	time;
+	int		status;
 	char	*cur_dir;
 };
 
 /*	flag.c	*/
-short	is_flag(char *arg);
-short	has_flags(t_flags *flags, int num_args, char **args);
+short			is_flag(char *arg);
+short			has_flags(t_flags *flags, int num_args, char **args);
 
 /*	file.c	*/
-char	**is_file(char **args);
+int				get_size_files(char **args);
+struct dirent	**is_file(t_flags flags, char **args, int sizes);
+
+/*	entries.c	*/
+DIR				*init_dir(char *file);
+short			is_readdir(struct dirent **entry, DIR *dir);
+int				read_dir_entries(DIR *dir, struct  dirent ***entries);
