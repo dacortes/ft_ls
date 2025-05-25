@@ -72,6 +72,90 @@ int	read_dir_entries(DIR *dir, struct  dirent ***entries)
 	return (i);
 }
 
+void	print_entries(struct dirent	**entries, int size)
+{
+	int	iter;
+
+	iter = 0;
+	while(iter < size)
+	{
+		ft_printf("%sentires%s[%d] %s\n", BLUE, END, iter, entries[iter]->d_name);
+		iter++;
+	}
+}
+
+// short	loop_recursive(t_flags flags, t_stack *stack)
+// {
+// 	struct dirent	**entries;
+// 	t_node			*curr;
+// 	t_node			*add;
+// 	DIR				*dir;
+// 	int				entry_count;
+// 	int				i;
+
+// 	(void)flags;
+// 	entry_count = 0;
+// 	entries = NULL;
+// 	while (stack->size > 0)
+// 	{
+// 		curr = copy_node(stack, true);
+// 		ft_printf("Exploring: %s\n", curr->entry->d_name);
+// 		dir = init_dir(curr->entry->d_name);
+// 		if (!dir)
+// 			continue ;
+// 		entry_count = read_dir_entries(dir, &entries);
+// 		sort_entries(entries, entry_count, flags);
+// 		// print_entries(entries, entry_count);
+// 		i = 0;
+// 		while (i < entry_count)
+// 		{
+// 			if (default_directories(entries[i]->d_name, entries[i]->d_type))
+// 			{
+// 				++i;
+// 				continue;
+// 			}
+// 			char *tmp;
+// 			int len = ft_strlen(curr->entry->d_name);
+// 			if (curr->entry->d_name[len] != '/')
+// 				tmp = ft_addend_char(curr->entry->d_name, '/');
+// 			else
+// 				tmp = ft_strdup(curr->entry->d_name);
+// 			char *full_path = ft_strjoin(tmp, entries[i]->d_name);
+// 			if (tmp)
+// 				free(tmp);
+// 			if (entries[i]->d_type == DT_DIR)
+// 			{
+// 				add = ft_calloc(1, sizeof(t_node));
+// 				if (!add)
+// 					exit(error_msg(MALLOC, 1, "loop_recursive", ""));
+// 				add->entry = ft_calloc(1, sizeof(struct dirent) + strlen(full_path) + 1);
+//                 ft_strcpy(add->entry->d_name, full_path);
+// 				push_stack(stack, add);
+// 				// ft_printf("Added directory to stack: %s\n", entries[i]->d_name);
+// 			}
+// 			else
+// 			{
+// 				// ft_printf("File: %s\n", entries[i]->d_name);
+// 			}
+// 			if (full_path)
+// 				free(full_path);
+// 			i++;
+// 		}
+// 		i = 0;
+// 		while (i < entry_count)
+// 		{
+// 			free(entries[i]);
+// 			i++;
+// 		}
+// 		closedir(dir);
+// 		free(curr->entry);
+// 		free(curr);
+// 	}
+// 	if (entries)
+// 		free(entries);
+// 	return (true);
+// }
+
 short	loop_recursive(t_flags flags, t_stack *stack)
 {
 	struct dirent	**entries;
@@ -93,12 +177,13 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 			continue ;
 		entry_count = read_dir_entries(dir, &entries);
 		sort_entries(entries, entry_count, flags);
-		i = 0;
-		while (i < entry_count)
+		// print_entries(entries, entry_count);
+		i = entry_count - 1;
+		while (i >= 0)
 		{
 			if (default_directories(entries[i]->d_name, entries[i]->d_type))
 			{
-				++i;
+				--i;
 				continue;
 			}
 			char *tmp;
@@ -120,13 +205,9 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 				push_stack(stack, add);
 				// ft_printf("Added directory to stack: %s\n", entries[i]->d_name);
 			}
-			else
-			{
-				ft_printf("File: %s\n", entries[i]->d_name);
-			}
 			if (full_path)
 				free(full_path);
-			i++;
+			i--;
 		}
 		i = 0;
 		while (i < entry_count)
