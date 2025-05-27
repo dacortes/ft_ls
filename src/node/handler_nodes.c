@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:15:44 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/21 09:50:50 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/27 09:55:58 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_node	*copy_node(t_stack *stack, short do_free)
 	if (!stack || !stack->top)
 		return (ft_printf(WARNING_POINTER, YELLOW, END, \
 			"copy_node", "stack"), NULL);
-	copy = ft_calloc(1, sizeof(t_node));
+	copy = protected_memory(ft_calloc(1, sizeof(t_node)), "copy_node");
 	copy_struct_dirent(stack->top->entry, &copy->entry);
 	if (do_free == true)
 		pop_stack(stack);

@@ -81,21 +81,13 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 				--i;
 				continue;
 			}
-			char *tmp;
-			int len = ft_strlen(curr->entry->d_name);
-			if (curr->entry->d_name[len] != '/')
-				tmp = ft_addend_char(curr->entry->d_name, '/');
-			else
-				tmp = ft_strdup(curr->entry->d_name);
-			char *full_path = ft_strjoin(tmp, entries[i]->d_name);
-			if (tmp)
-				free(tmp);
+			char *full_path = create_full_path(curr->entry->d_name, entries[i]->d_name);
 			if (entries[i]->d_type == DT_DIR)
 			{
 				add = ft_calloc(1, sizeof(t_node));
 				if (!add)
 					exit(error_msg(MALLOC, 1, "loop_recursive", ""));
-				add->entry = ft_calloc(1, sizeof(struct dirent) + strlen(full_path) + 1);
+				add->entry = ft_calloc(1, sizeof(struct dirent) + ft_strlen(full_path) + 1);
                 ft_strcpy(add->entry->d_name, full_path);
 				push_stack(stack, add);
 				// ft_printf("Added directory to stack: %s\n", entries[i]->d_name);

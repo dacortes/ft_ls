@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:56:30 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/23 16:17:23 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:29:43 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
+/*	directory.c	*/
+time_t	get_latest_mtime(const char *dir_name);
+int		dirs_same_time(struct stat stat1, struct stat stat2, \
+		char *dir1, char *dir2);
 /*	quicksort	*/
 void	swap_ptr(void **a, void **b);
-void	quicksort(char **arr, int low, int high);
+void	quicksort_entries(struct dirent **src, int low, int high, t_flags flag);
 /*	sort_files	*/
-void	sort_files(char **files, int size);
 void	sort_entries(struct dirent **entries, int count, t_flags flags);

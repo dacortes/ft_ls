@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 11:02:55 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/25 18:11:36 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:01:27 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ static short	add_array_files(char **src, struct dirent **dst)
 	{
 		if (is_flag(src[iter]) == false)
 		{
-			dst[add] = ft_calloc(sizeof(struct dirent), 1);
-			if (!dst[add])
-				exit(error_msg(MALLOC, 1, "add_array_files", ""));
+			dst[add] = protected_memory(ft_calloc(sizeof(struct dirent), 1), \
+				"add_array_files");
 			ft_strcpy(dst[add]->d_name, src[iter]);
 			add++;
 		}
@@ -73,9 +72,31 @@ struct dirent	**is_file(t_flags flags, char **args, int sizes)
 
 	if (!sizes || sizes < 0)
 		return (NULL);
-	entries = ft_calloc(sizes + 1, sizeof(struct dirent *));
+	entries = protected_memory(ft_calloc(sizes + 1, sizeof(struct dirent *)) \
+		, "is_file");
 	if (add_array_files(args, entries) == EXIT_FAILURE)
 		return (NULL);
 	sort_entries(entries, sizes, flags);
 	return (entries);
 }
+
+char	*create_full_path(const char *curr_root_dir, const char *curr_dir)
+{
+	char	*full_path;
+	char	*tmp;
+	int		len;
+
+	if (!curr_root_dir || !*curr_root_dir)
+		return (NULL);
+	len = ft_strlen(curr_root_dir);
+	if (curr_root_dir[len] != '/')
+		tmp = protected_memory(ft_addend_char(curr_root_dir, '/'), \
+			"create_full_path");
+	else
+		tmp = protected_memory(ft_strdup(curr_root_dir),  "create_full_path");
+	full_path = protected_memory(ft_strjoin(tmp, curr_dir), "create_full_path");
+	if (tmp)
+		free(tmp);
+	return (full_path);
+}
+

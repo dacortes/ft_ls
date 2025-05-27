@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/25 17:49:51 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:02:16 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ short			has_flags(t_flags *flags, int num_args, char **args);
 /*	file.c	*/
 int				get_size_files(char **args);
 struct dirent	**is_file(t_flags flags, char **args, int sizes);
+char			*create_full_path(const char *curr_root_dir, \
+	const char *curr_dir);
 
 /*	entries.c	*/
 DIR				*init_dir(char *file);
