@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:24:59 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/18 17:04:05 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:54:48 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static short	put_flags(t_flags *flags, char *arg)
 			flags->all = true;
 		else if (arg[iter] == reverse)
 			flags->reverse = true;
-		else if (arg[iter] == time)
+		else if (arg[iter] == time_flag)
 			flags->time = true;
 		status = true;
 		iter++;

@@ -137,9 +137,13 @@ int main(int ac, char **av)
 	files = NULL;
 	size_files = 0;
 	if (has_flags(&flags, ac, &av[1]) == false && ac == 1)
+	{
 		ft_printf("enlisto sin flags\n");
+	}
 	else
 	{
+		//hay que tener encuenta si son argumentos listados como parametro de entrada 
+		//si es asi este debe mostrar primero los archivos regurares organizados por el tiempo
 		size_files = get_size_files(&av[1]);
 		files = is_file(flags, &av[1], size_files);
 	}

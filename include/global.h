@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:10:50 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/21 16:01:22 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/28 17:54:22 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ enum e_flags
 	recursive = 'R',
 	all = 'a',
 	reverse = 'r',
-	time = 't',
+	time_flag = 't',
 };

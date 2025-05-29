@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 11:02:55 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/27 10:01:27 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:29:54 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,6 @@ static short	add_array_files(char **src, struct dirent **dst)
 	return (EXIT_SUCCESS);
 }
 
-struct dirent	**is_file(t_flags flags, char **args, int sizes)
-{
-	struct dirent	**entries;
-
-	if (!sizes || sizes < 0)
-		return (NULL);
-	entries = protected_memory(ft_calloc(sizes + 1, sizeof(struct dirent *)) \
-		, "is_file");
-	if (add_array_files(args, entries) == EXIT_FAILURE)
-		return (NULL);
-	sort_entries(entries, sizes, flags);
-	return (entries);
-}
-
 char	*create_full_path(const char *curr_root_dir, const char *curr_dir)
 {
 	char	*full_path;
@@ -100,3 +86,16 @@ char	*create_full_path(const char *curr_root_dir, const char *curr_dir)
 	return (full_path);
 }
 
+struct dirent	**is_file(t_flags flags, char **args, int sizes)
+{
+	struct dirent	**entries;
+
+	if (!sizes || sizes < 0)
+		return (NULL);
+	entries = protected_memory(ft_calloc(sizes + 1, sizeof(struct dirent *)) \
+		, "is_file");
+	if (add_array_files(args, entries) == EXIT_FAILURE)
+		return (NULL);
+	sort_entries(entries, sizes, flags);
+	return (entries);
+}
