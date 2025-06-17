@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:53:07 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/17 13:58:17 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:50:26 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	partition_entries(struct dirent **arr, int low, int high, t_flags flags)
 	pivot = arr[high];
 	while (j < high)
 	{
-		
 		if (flags.time)
 			cmp = compare_by_time((void *)arr[j], (void *)pivot);
 		else

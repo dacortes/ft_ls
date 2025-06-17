@@ -6,23 +6,27 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:06:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/28 17:56:21 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:02:34 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sort.h"
 
-// void	recursive_latest_mtime(char *path, struct stat d_time, time_t *mtime)
-// {
-// 	time_t	subdir_mtime;
+static time_t	swap_time(struct stat file_stat, time_t *latest, char *path)
+{
+	time_t subdir_mtime;
 
-// 	if (S_ISDIR(d_time.st_mode))
-// 	{
-// 		subdir_mtime = get_latest_mtime(path);
-// 		if (subdir_mtime > (*mtime))
-// 			*mtime = subdir_mtime;
-// 	}
-// }
+	subdir_mtime = 0;
+	if (file_stat.st_ctime > *latest)
+		*latest = file_stat.st_ctime;
+	if (S_ISDIR(file_stat.st_mode))
+	{
+		time_t subdir_mtime = get_latest_mtime(path);
+		if (subdir_mtime > *latest)
+			*latest = subdir_mtime;
+	}
+	return (subdir_mtime);
+}
 
 time_t	get_latest_mtime(const char *dir_name)
 {
@@ -41,31 +45,17 @@ time_t	get_latest_mtime(const char *dir_name)
 		if (default_directories(entry->d_name, entry->d_type))
 			continue ;
 		full_path = create_full_path(dir_name, entry->d_name);
-		if (stat(full_path, &file_stat) == EXIT_SUCCESS)
-		{
-			if (file_stat.st_ctime > latest_mtime)
-				latest_mtime = file_stat.st_ctime;
-			if (S_ISDIR(file_stat.st_mode))
-			{
-				time_t subdir_mtime = get_latest_mtime(full_path);
-				if (subdir_mtime > latest_mtime)
-					latest_mtime = subdir_mtime;
-			}
-		}
+		swap_time(file_stat, &latest_mtime, full_path);
 		free(full_path);
 	}
 	return (closedir(dir), latest_mtime);
 }
-
-#include <time.h>
 
 int	dirs_same_time(struct stat stat1, struct stat stat2, char *dir1, char *dir2)
 {
 	time_t latest1;
 	time_t latest2;
 
-	// printf("Modification time (mtime): %s", ctime(&stat1.st_mtime));
-    // printf("Change time (ctime): %s", ctime(&stat1.st_ctime));
 	if (S_ISDIR(stat1.st_mode) && S_ISDIR(stat2.st_mode))
 	{
 		latest1 = get_latest_mtime(dir1);

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:56:30 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/27 10:29:43 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:08:10 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@
 #include "arguments.h"
 #include "ft_printf.h"
 
+#include <time.h>
 #include <dirent.h>
 #include <sys/stat.h>
 
-/*	directory.c	*/
+/*		directory.c		*/
 time_t	get_latest_mtime(const char *dir_name);
 int		dirs_same_time(struct stat stat1, struct stat stat2, \
 		char *dir1, char *dir2);
-/*	quicksort	*/
+/*		quicksort.c		*/
 void	swap_ptr(void **a, void **b);
 void	quicksort_entries(struct dirent **src, int low, int high, t_flags flag);
-/*	sort_files	*/
+/*		recursive.c		*/
+short	loop_recursive(t_flags flags, t_stack *stack);
+short	exec_recursive_flag(t_flags flags, char *start_dir);
+/*		sort_files.c	*/
 void	sort_entries(struct dirent **entries, int count, t_flags flags);

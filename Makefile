@@ -40,7 +40,7 @@ SOURCES = \
 	errors/memory_error.c errors/print_errors.c \
 	print_values/print_flags.c \
 	node/clear.c node/handler_nodes.c node/handler_data.c\
-	sort/directory.c sort/quicksort.c sort/sort_files.c\
+	sort/directory.c sort/quicksort.c sort/recursive.c sort/sort_files.c\
 	main.c
 
 INCLUDES = $(addprefix -I, ./include)
