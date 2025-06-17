@@ -128,6 +128,20 @@ short	exec_recursive_flag(t_flags flags, char *start_dir)
 	return (stack.status);
 }
 
+struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
+{
+	struct dirent	**entries;
+	DIR				*dir;
+
+	(void)flags;
+	dir = init_dir(name);
+	if (!dir)
+		return (NULL);
+	entries = NULL;
+	*entry_count = read_dir_entries(dir, &entries);
+	return (entries);
+}
+
 int main(int ac, char **av)
 {
 	struct dirent	**files;
@@ -138,7 +152,9 @@ int main(int ac, char **av)
 	size_files = 0;
 	if (has_flags(&flags, ac, &av[1]) == false && ac == 1)
 	{
-		ft_printf("enlisto sin flags\n");
+		ft_printf("enlisto sin flags en el directorio actual\n");
+		// files = 
+		files = curr_directory(flags, "./", &size_files);
 	}
 	else
 	{
@@ -152,6 +168,5 @@ int main(int ac, char **av)
 	print_entries(files, size_files);
 	// exec_recursive_flag(flags, files[0]->d_name);
 	clear_entries(files, size_files, false);
-	// exec_recursive_flag(flags, files[0]);
 	return (EXIT_SUCCESS);
 }
