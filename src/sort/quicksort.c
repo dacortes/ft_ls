@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:53:07 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/29 11:45:37 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:58:17 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ int	compare_by_name(const void *a, const void *b)
 
 	entry1 = (struct dirent *)a;
 	entry2 = (struct dirent *)b;
-	ft_printf("%s -- %s\n", entry1->d_name, entry2->d_name);
 	return (strcmp(entry1->d_name, entry2->d_name));
 	return (ft_strncmp(entry1->d_name, entry2->d_name, -1));
 }
 
-#include <time.h>
+// #include <time.h>
 
 int	compare_by_time(const void *a, const void *b)
 {
@@ -53,20 +52,14 @@ int	compare_by_time(const void *a, const void *b)
 
 	entry1 = (struct dirent *)a;
 	entry2 = (struct dirent *)b;
-	//tener encuenta los links esto no puede ser solo start
 	if (stat(entry1->d_name, &stat1) == ERROR)
 		return (0);
 	if (stat(entry2->d_name, &stat2) == ERROR)
 		return (0);
-    if (S_ISREG(stat1.st_mode) && !S_ISREG(stat2.st_mode))
-        return -1;
-    if (!S_ISREG(stat1.st_mode) && S_ISREG(stat2.st_mode))
-        return 1;
-	// printf("Modification time (mtime): name file: %s -- %s", entry1->d_name, ctime(&stat1.st_mtime));
-    // printf("Change time (ctime): name file: %s -- %s", entry1->d_name, ctime(&stat1.st_ctime));
-	// printf("--------------------------------------------------------------------------\n");
-	// printf("Modification time (mtime): name file: %s -- %s", entry2->d_name, ctime(&stat2.st_mtime));
-    // printf("Change time (ctime): name file: %s -- %s", entry2->d_name, ctime(&stat2.st_ctime));
+	if (S_ISREG(stat1.st_mode) && !S_ISREG(stat2.st_mode))
+		return (-1);
+	if (!S_ISREG(stat1.st_mode) && S_ISREG(stat2.st_mode))
+		return (1);
 	if (stat1.st_ctime > stat2.st_ctime)
 		return (-1);
 	else if (stat1.st_ctime < stat2.st_ctime)

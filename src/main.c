@@ -66,13 +66,12 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 	while (stack->size > 0)
 	{
 		curr = copy_node(stack, true);
-		ft_printf("Exploring: %s\n", curr->entry->d_name);
+		// ft_printf("Exploring: %s\n", curr->entry->d_name);
 		dir = init_dir(curr->entry->d_name);
 		if (!dir)
 			continue ;
 		entry_count = read_dir_entries(dir, &entries);
 		sort_entries(entries, entry_count, flags);
-		// print_entries(entries, entry_count);
 		i = entry_count - 1;
 		while (i >= 0)
 		{
@@ -139,6 +138,10 @@ struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
 		return (NULL);
 	entries = NULL;
 	*entry_count = read_dir_entries(dir, &entries);
+	sort_entries(entries, *entry_count, flags);
+	if (flags.recursive == true)
+		exec_recursive_flag(flags, entries[0]->d_name);
+	closedir(dir);
 	return (entries);
 }
 
@@ -152,8 +155,7 @@ int main(int ac, char **av)
 	size_files = 0;
 	if (has_flags(&flags, ac, &av[1]) == false && ac == 1)
 	{
-		ft_printf("enlisto sin flags en el directorio actual\n");
-		// files = 
+		flags.recursive = true;
 		files = curr_directory(flags, "./", &size_files);
 	}
 	else
