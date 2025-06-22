@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:52:46 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/25 17:41:28 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:59:13 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ short	init_struct_dirent(t_node **node, DIR *dir, char *file)
 	struct dirent	*entry;
 
 	if (!node || !*node)
-		return (ft_printf(WARNING_POINTER, YELLOW, END, \
+		return (fd_printf(2, WARNING_POINTER, YELLOW, END, \
 			"init_struct_dirent", "node"), EXIT_SUCCESS);
 	dir = opendir(file);
 	if (!dir)
@@ -129,13 +129,13 @@ short	default_directories(char *name_file, unsigned char type)
  * - `file` if the path is a regular file or another type.
  * - An error code if lstat fails.
  */
-int	is_directory(t_node **node, char *path)
-{
-	if (lstat(path, &(*node)->st) == ERROR)
-		return (error_msg(OPEN_DIR, 2, path, strerror(errno)));
-	if (S_ISLNK((*node)->st.st_mode))
-		return (dir_link);
-	else if (S_ISDIR((*node)->st.st_mode))
-		return (dir);
-	return (file);
-}
+// int	is_directory(t_node **node, char *path)
+// {
+// 	if (lstat(path, &(*node)->st) == ERROR)
+// 		return (error_msg(OPEN_DIR, 2, path, strerror(errno)));
+// 	if (S_ISLNK((*node)->st.st_mode))
+// 		return (dir_link);
+// 	else if (S_ISDIR((*node)->st.st_mode))
+// 		return (dir);
+// 	return (file);
+// }

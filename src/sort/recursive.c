@@ -6,23 +6,22 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/17 17:51:04 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/22 12:38:29 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sort.h"
 #include "clear.h"
 #include "errors.h"
+#include "print_values.h"
 
 int	add_node_to_stack(t_stack *stack, struct dirent **files, char *path, int i)
 {
 	t_node	*add;
 
 	if (!files || !*files)
-	{
-		ft_printf(WARNING_POINTER, YELLOW, END, "add_node_to_stack", "files");
-		return (EXIT_FAILURE);
-	}
+		return  (fd_printf(2, WARNING_POINTER, YELLOW, END, \
+		"add_node_to_stack", "files"), EXIT_FAILURE);
 	add = NULL;
 	if (files[i]->d_type == DT_DIR)
 	{
@@ -37,25 +36,28 @@ int	add_node_to_stack(t_stack *stack, struct dirent **files, char *path, int i)
 	return (EXIT_SUCCESS);
 }
 
-int	depth_loop(t_stack *stack, struct dirent **files, int count, t_node *curr)
+int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, int count, t_node *curr)
 {
 	char	*full_path;
 	int		i;
 
-	i = count -1;
+	i = 0;
 	full_path = NULL;
-	while (i >= 0)
+	while (i < count)
 	{
 		if (default_directories(files[i]->d_name, files[i]->d_type))
 		{
-			--i;
+			++i;
 			continue ;
 		}
 		full_path = create_full_path(curr->entry->d_name, files[i]->d_name);
 		add_node_to_stack(stack, files, full_path, i);
+		ft_printf("---> %s\n", files[i]->d_name);
+		flags.long_format = true;
+		get_long_format(flags, full_path);
 		if (full_path)
 			free(full_path);
-		i--;
+		++i;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -78,7 +80,7 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 			continue ;
 		entry_count = read_dir_entries(dir, &entries);
 		sort_entries(entries, entry_count, flags);
-		depth_loop(stack, entries, entry_count, curr);
+		depth_loop(flags, stack, entries, entry_count, curr);
 		clear_entries(entries, entry_count, true);
 		closedir(dir);
 		free(curr->entry);

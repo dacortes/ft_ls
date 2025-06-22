@@ -26,9 +26,6 @@
 	◦ exit
 */
 
-// #include "libft.h"
-// #include "ft_printf.h"
-// #include <errno.h>
 #include <pwd.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -39,7 +36,7 @@ void	print_entries(struct dirent	**entries, int size)
 
 	if (!size || !entries || !*entries)
 	{
-		ft_printf(WARNING_POINTER, YELLOW, END, \
+		fd_printf(2, WARNING_POINTER, YELLOW, END, \
 			"print_entries", "files");
 		return ;
 	}
@@ -88,6 +85,8 @@ int main(int ac, char **av)
 		//si es asi este debe mostrar primero los archivos regurares organizados por el tiempo
 		size_files = get_size_files(&av[1]);
 		files = is_file(flags, &av[1], size_files);
+		if (flags.recursive == true)
+			exec_recursive_flag(flags, files[0]->d_name);
 	}
 	if (!files)
 		return (0);
