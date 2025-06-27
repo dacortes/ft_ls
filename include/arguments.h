@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/28 17:54:36 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/22 15:33:32 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "global.h"
 #include "ft_printf.h"
 
-#include <pwd.h>
 #include <errno.h>
 #include <string.h>
 #include <dirent.h>

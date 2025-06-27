@@ -6,11 +6,12 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:13:27 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/22 13:43:54 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:56:04 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "print_values.h"
+#include "errors.h"
 
 void	get_type_file(unsigned int mode, char *perms)
 {
@@ -59,6 +60,5 @@ char	*get_format(unsigned int mode)
 	get_permissions_user(mode, perms);
 	get_permissions_group(mode, perms);
 	get_permissions_other(mode, perms);
-	ft_printf("*%s*\n", perms);
-	return (perms);
+	return (protected_memory(ft_strdup(perms), "get_format"));
 }

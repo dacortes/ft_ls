@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/22 12:38:29 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:52:02 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, int count, 
 		add_node_to_stack(stack, files, full_path, i);
 		ft_printf("---> %s\n", files[i]->d_name);
 		flags.long_format = true;
-		get_long_format(flags, full_path);
+		get_long_format(flags, full_path, files[i]->d_name);
 		if (full_path)
 			free(full_path);
 		++i;
