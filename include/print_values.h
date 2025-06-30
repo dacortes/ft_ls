@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/27 16:39:48 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:59:29 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ char	*get_type_dir(int type);
 
 /*	print_files.c	*/
 char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *line);
+int		print_line(char *line, size_t size);
 /*	format.c	*/
 char	*get_format_perms(unsigned int mode);

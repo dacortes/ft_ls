@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/27 16:02:47 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:03:06 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,14 @@ char	*get_bytes(long long st_size)
 
 char	*get_date(time_t *mtime)
 {
-	return (protected_memory(ft_strdup(ctime(mtime)), "get_date"));
+	size_t	len;
+	char	*str;
+
+	str = protected_memory(ft_strdup(ctime(mtime)), "get_date");
+	len = ft_strlen(str);
+	if (len > 0)
+		str[len - 1] = '\0';
+	return (str);
 }
 
 char	*get_name(char	*name)
@@ -70,34 +77,16 @@ char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *add)
 	add->bytes = get_bytes(st.st_size);
 	add->date = get_date(&st.st_mtime);
 	add->name = get_name(name);
-	ft_printf("%s %s %s %s %s %s %s\n", \
-	add->permissions, \
-	add->num_links, \
-	add->owner, \
-	add->group, \
-	add->bytes, \
-	add->date, \
-	add->name);
-	free(add->permissions);
-	free(add->num_links);
-	free(add->owner);
-	free(add->group);
-	free(add->bytes);
-	free(add->date);
-	free(add->name);
 	return(NULL);
 }
 
 /* pasarle ya el len total para ahorrarse un bucle */
-int	print_line(t_flags flags, char *line)
+int	print_line(char *line, size_t size)
 {
-	size_t	len;
-
-	(void)flags;
 	if (!line)
 		return (fd_printf(2, WARNING_POINTER, YELLOW, END, \
 			"printf_flags", "stack"), EXIT_FAILURE);
-	len = ft_strlen(line);
-	write(1, line, len);
+	write(1, line, size);
+	write(1, "\n", 1);
 	return (EXIT_SUCCESS);
 }
