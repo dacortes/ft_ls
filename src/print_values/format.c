@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:13:27 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/25 15:56:04 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:52:26 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	get_permissions_other(unsigned int mode, char *perms)
 	perms[9] = "-xTt"[((!!(mode & S_ISVTX)) << 1) | (!!(mode & S_IXOTH))];
 }
 
-char	*get_format(unsigned int mode)
+char	*get_format_perms(unsigned int mode)
 {
 	static char	perms[10];
 
@@ -60,5 +60,5 @@ char	*get_format(unsigned int mode)
 	get_permissions_user(mode, perms);
 	get_permissions_group(mode, perms);
 	get_permissions_other(mode, perms);
-	return (protected_memory(ft_strdup(perms), "get_format"));
+	return (protected_memory(ft_strdup(perms), "get_format_perms"));
 }

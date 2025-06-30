@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/25 15:52:02 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:48:29 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,98 @@ int	add_node_to_stack(t_stack *stack, struct dirent **files, char *path, int i)
 	return (EXIT_SUCCESS);
 }
 
-int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, int count, t_node *curr)
+
+
+void	has_flag_all(t_flags flags, char *curr_root_dir, char *curr_dir, t_line *add)
 {
 	char	*full_path;
-	int		i;
+
+	if (flags.all == true)
+		return ;
+	full_path = create_full_path(curr_root_dir, curr_dir);
+	get_long_format(flags, full_path, curr_dir, add);
+	if (full_path)
+	{
+		free(full_path);
+		full_path = NULL;
+	}
+}
+
+void	update_max_lengths(t_line line, t_size *size)
+{
+	size_t	len;
+
+	len = ft_strlen(line.num_links);
+	if (len > size->max_links)
+		size->max_links = len;
+	len = ft_strlen(line.owner);
+	if (len > size->max_owner)
+		size->max_owner = len;
+	len = ft_strlen(line.group);
+	if (len > size->max_group)
+		size->max_group = len;
+	len = ft_strlen(line.bytes);
+	if (len > size->max_bytes)
+		size->max_bytes = len;
+	len = ft_strlen(line.date);
+	if (len > size->max_date)
+		size->max_date = len;
+	len = ft_strlen(line.name);
+	if (len > size->max_name)
+		size->max_name = len;
+}
+
+void	foo(t_flags flags, t_line **line, int limit)
+{
+	t_size	size;
+	int		iter;
+
+	if (flags.long_format == false)
+		return ;
+	iter = 0;
+	ft_bzero(&size, sizeof(size));
+	while (iter < limit)
+	{
+		update_max_lengths((*line)[iter], &size);
+		iter++;
+	}
+	ft_printf("max_links=%d\nmax_owner=%d\nmax_group=%d\nmax_bytes=%d\nmax_date=%d\nmax_name=%d\nmax_line%d\n", \
+	size.max_links, \
+	size.max_owner, \
+	size.max_group, \
+	size.max_bytes, \
+	size.max_date, \
+	size.max_name, \
+	size.max_line);
+}
+
+int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, int count, t_node *curr)
+{
+	char			*full_path;
+	t_line			*line;
+	int				i;
 
 	i = 0;
 	full_path = NULL;
+	line = protected_memory(ft_calloc(sizeof(t_line), count + 1), "depth_loop");
 	while (i < count)
 	{
+		flags.long_format = true;// quitar esta linea	
 		if (default_directories(files[i]->d_name, files[i]->d_type))
 		{
+			has_flag_all(flags, curr->entry->d_name, files[i]->d_name, &line[i]);
 			++i;
 			continue ;
 		}
 		full_path = create_full_path(curr->entry->d_name, files[i]->d_name);
+		get_long_format(flags, full_path, files[i]->d_name, &line[i]);
 		add_node_to_stack(stack, files, full_path, i);
-		ft_printf("---> %s\n", files[i]->d_name);
-		flags.long_format = true;
-		get_long_format(flags, full_path, files[i]->d_name);
 		if (full_path)
 			free(full_path);
 		++i;
 	}
+	foo(flags, &line, count);
+	free(line);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/25 19:07:40 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:39:48 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_line			t_line;
 
 struct s_size
 {
-	size_t	max_perms;
 	size_t	max_links;
 	size_t	max_owner;
 	size_t	max_group;
@@ -56,6 +55,6 @@ short	print_array_files(char **files);
 char	*get_type_dir(int type);
 
 /*	print_files.c	*/
-char	*get_long_format(t_flags flags, char *path_file, char *name);
+char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *line);
 /*	format.c	*/
-char	*get_format(unsigned int mode);
+char	*get_format_perms(unsigned int mode);

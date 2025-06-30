@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/27 11:49:08 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:02:47 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,27 @@ char	*get_group(unsigned int gid)
 	return (protected_memory(ft_strdup(gr->gr_name), "get_group"));
 }
 
-char	*get_num_link(unsigned long num_link, size_t *size_num_link)
+char	*get_num_link(unsigned long num_link)
 {
-	return (protected_memory(ft_ltoa(num_link, size_num_link), "get_num_link"));
+	return (protected_memory(ft_ltoa(num_link), "get_num_link"));
 }
 
-char	*get_bytes(long long st_size, size_t *size_bytes)
+char	*get_bytes(long long st_size)
 {
-	return (protected_memory(ft_ltoa(st_size, size_bytes), \
-	"get_bytes"));
+	return (protected_memory(ft_ltoa(st_size), "get_bytes"));
 }
 
-char	*get_date(time_t *mtime, size_t *size_date)
+char	*get_date(time_t *mtime)
 {
-	char	*date;
-
-	date = protected_memory(ft_strdup(ctime(mtime)), "get_date");
-	(*size_date) = ft_strlen(date);
-	return (date);
+	return (protected_memory(ft_strdup(ctime(mtime)), "get_date"));
 }
 
-char	*get_name(char	*name, size_t *size_name)
+char	*get_name(char	*name)
 {
-	char	*cpy_name;
-
-	cpy_name = protected_memory(ft_strdup(name), "get_name");
-	(*size_name) = ft_strlen(cpy_name);
-	return (cpy_name);
+	return (protected_memory(ft_strdup(name), "get_name"));
 }
 
-char	*get_long_format(t_flags flags, char *path_file, char *name)
+char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *add)
 {
 	struct	stat	st;
 
@@ -72,31 +63,28 @@ char	*get_long_format(t_flags flags, char *path_file, char *name)
 		return (NULL);
 	lstat(path_file, &st);
 
-	t_line	line;
-	t_size	size_line;
-
-	line.permissions = get_format(st.st_mode);
-	line.num_links = get_num_link(st.st_nlink, &size_line.max_links);
-	line.owner = get_owner(st.st_uid);
-	line.group = get_group(st.st_gid);
-	line.bytes = get_bytes(st.st_size, &size_line.max_bytes);
-	line.date = get_date(&st.st_mtime, &size_line.max_date);
-	line.name = get_name(name, &size_line.max_name);
+	add->permissions = get_format_perms(st.st_mode);
+	add->num_links = get_num_link(st.st_nlink);
+	add->owner = get_owner(st.st_uid);
+	add->group = get_group(st.st_gid);
+	add->bytes = get_bytes(st.st_size);
+	add->date = get_date(&st.st_mtime);
+	add->name = get_name(name);
 	ft_printf("%s %s %s %s %s %s %s\n", \
-	line.permissions, \
-	line.num_links, \
-	line.owner, \
-	line.group, \
-	line.bytes, \
-	line.date, \
-	line.name);
-	free(line.permissions);
-	free(line.num_links);
-	free(line.owner);
-	free(line.group);
-	free(line.bytes);
-	free(line.date);
-	free(line.name);
+	add->permissions, \
+	add->num_links, \
+	add->owner, \
+	add->group, \
+	add->bytes, \
+	add->date, \
+	add->name);
+	free(add->permissions);
+	free(add->num_links);
+	free(add->owner);
+	free(add->group);
+	free(add->bytes);
+	free(add->date);
+	free(add->name);
 	return(NULL);
 }
 
