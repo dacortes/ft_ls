@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/30 17:10:20 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:29:25 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,55 +119,69 @@ void	fill_spaces_left(char *dest, char *str, size_t width)
 	ft_strcpy(dest + padding, str);
 }
 
+void	add_permissions(char **cursor, char *permissions)
+{
+	ft_strcpy(*cursor, permissions);
+	*cursor += ft_strlen(permissions);
+	*(*cursor)++ = ' ';
+}
+
+void	add_links(char **cursor, char *num_links, size_t offset)
+{
+	fill_spaces_left(*cursor, num_links, offset);
+	*cursor += offset;
+	*(*cursor)++ = ' ';
+}
+
+void	add_owner(char **cursor, char *owner, size_t offset)
+{
+	fill_spaces_right(*cursor, owner, offset);
+	*cursor += offset;
+	*(*cursor)++ = ' ';
+}
+
+void	add_group(char **cursor, char *group, size_t offset)
+{
+	fill_spaces_right(*cursor, group, offset);
+	*cursor += offset;
+	*(*cursor)++ = ' ';
+}
+
+void	add_bytes(char **cursor, char *bytes, size_t offset)
+{
+	fill_spaces_left(*cursor, bytes, offset);
+	*cursor += offset;
+	*(*cursor)++ = ' ';
+}
+
+void	add_date(char **cursor, char *date)
+{
+	ft_strcpy(*cursor, date);
+	*cursor += ft_strlen(date);
+	*(*cursor)++ = ' ';
+}
+
 void	create_line(t_line *line, t_size size)
 {
+	size_t	offset;
+	char	*cursor;
+
 	if (!line || !size.max_line)
 		return ;
-
 	line->line = protected_memory(ft_calloc(size.max_line + 9, sizeof(char)), \
 		"create_line");
-
-	char	*cursor = line->line;
-	size_t	offset;
-
-	// 1. Permissions
-	ft_strcpy(cursor, line->permissions);
-	cursor += ft_strlen(line->permissions);
-	*cursor++ = ' ';
-
-	// 2. Links (right-aligned)
+	cursor = line->line;
+	add_permissions(&cursor, line->permissions);
 	offset = size.max_links;
-	fill_spaces_left(cursor, line->num_links, offset);
-	cursor += offset;
-	*cursor++ = ' ';
-
-	// 3. Owner (left-aligned)
+	add_links(&cursor, line->num_links, offset);
 	offset = size.max_owner;
-	fill_spaces_right(cursor, line->owner, offset);
-	cursor += offset;
-	*cursor++ = ' ';
-
-	// 4. Group (left-aligned)
+	add_owner(&cursor, line->owner, offset);
 	offset = size.max_group;
-	fill_spaces_right(cursor, line->group, offset);
-	cursor += offset;
-	*cursor++ = ' ';
-
-	// 5. Bytes (right-aligned)
+	add_group(&cursor, line->group, offset);
 	offset = size.max_bytes;
-	fill_spaces_left(cursor, line->bytes, offset);
-	cursor += offset;
-	*cursor++ = ' ';
-
-	// 6. Date (no alignment, fixed size)
-	ft_strcpy(cursor, line->date);
-	cursor += ft_strlen(line->date);
-	*cursor++ = ' ';
-
-	// 7. Name
+	add_bytes(&cursor, line->bytes, offset);
+	add_date(&cursor, line->date);
 	ft_strcpy(cursor, line->name);
-
-	// Final output
 	print_line(line->line, size.max_line + 8);
 }
 
