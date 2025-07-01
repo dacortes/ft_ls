@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:24 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/22 10:39:58 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:29:18 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ short	print_array_files(char **files)
 	ft_printf("%sFunc print_array_files\n%s", BLUE, END);
 	if (!files || !*files)
 		return (fd_printf(2, WARNING_POINTER, YELLOW, END, \
-			"print_array_files", "files"), false);
+		"print_array_files", "files"), false);
 	iter = 0;
 	while (files[++iter])
 		ft_printf("%sindex%s [%d] -- %sname%s: *%s*\n", BLUE, END, iter \

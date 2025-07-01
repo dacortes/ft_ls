@@ -6,55 +6,12 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/30 17:03:06 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:07:34 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "print_values.h"
 #include "errors.h"
-
-char	*get_owner(unsigned int uid)
-{
-	struct passwd *pw;
-	
-	pw = getpwuid(uid);
-	return (protected_memory(ft_strdup(pw->pw_name), "get_user"));
-}
-
-char	*get_group(unsigned int gid)
-{
-	struct group *gr;
-	
-	gr = getgrgid(gid);
-	return (protected_memory(ft_strdup(gr->gr_name), "get_group"));
-}
-
-char	*get_num_link(unsigned long num_link)
-{
-	return (protected_memory(ft_ltoa(num_link), "get_num_link"));
-}
-
-char	*get_bytes(long long st_size)
-{
-	return (protected_memory(ft_ltoa(st_size), "get_bytes"));
-}
-
-char	*get_date(time_t *mtime)
-{
-	size_t	len;
-	char	*str;
-
-	str = protected_memory(ft_strdup(ctime(mtime)), "get_date");
-	len = ft_strlen(str);
-	if (len > 0)
-		str[len - 1] = '\0';
-	return (str);
-}
-
-char	*get_name(char	*name)
-{
-	return (protected_memory(ft_strdup(name), "get_name"));
-}
 
 char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *add)
 {
@@ -80,7 +37,6 @@ char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *add)
 	return(NULL);
 }
 
-/* pasarle ya el len total para ahorrarse un bucle */
 int	print_line(char *line, size_t size)
 {
 	if (!line)
