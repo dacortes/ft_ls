@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/30 17:29:25 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:28:19 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	add_node_to_stack(t_stack *stack, struct dirent **files, char *path, int i)
 	return (EXIT_SUCCESS);
 }
 
-
-
 void	has_flag_all(t_flags flags, char *curr_root_dir, char *curr_dir, t_line *add)
 {
 	char	*full_path;
@@ -50,163 +48,6 @@ void	has_flag_all(t_flags flags, char *curr_root_dir, char *curr_dir, t_line *ad
 	{
 		free(full_path);
 		full_path = NULL;
-	}
-}
-
-void	update_max_lengths(t_line *line, t_size *size)
-{
-	size_t	len;
-
-	len = ft_strlen(line->num_links);
-	if (len > size->max_links)
-		size->max_links = len;
-	len = ft_strlen(line->owner);
-	if (len > size->max_owner)
-		size->max_owner = len;
-	len = ft_strlen(line->group);
-	if (len > size->max_group)
-		size->max_group = len;
-	len = ft_strlen(line->bytes);
-	if (len > size->max_bytes)
-		size->max_bytes = len;
-	len = ft_strlen(line->date);
-	if (len > size->max_date)
-		size->max_date = len;
-	len = ft_strlen(line->name);
-	if (len > size->max_name)
-		size->max_name = len;
-	size->max_line = size->max_links + size->max_owner + \
-	size->max_group + size->max_bytes + size->max_date + size->max_name + 10;
-}
-
-short	clear_line(t_line *line)
-{
-	if (!line)
-		return (false);
-	free(line->permissions);
-	free(line->num_links);
-	free(line->owner);
-	free(line->group);
-	free(line->bytes);
-	free(line->date);
-	free(line->name);
-	free(line->line);
-	return (true);
-}
-
-void	fill_spaces_right(char *dest, char *str, size_t width)
-{
-	size_t	len = ft_strlen(str);
-	size_t	i = 0;
-
-	ft_strcpy(dest, str);
-	i = len;
-	while (i < width)
-		dest[i++] = ' ';
-	dest[i] = '\0';
-}
-
-void	fill_spaces_left(char *dest, char *str, size_t width)
-{
-	size_t	len = ft_strlen(str);
-	size_t	padding;
-
-	if (width > len)
-		padding = width - len;
-	else
-		padding = 0;
-	ft_memset(dest, ' ', padding);
-	ft_strcpy(dest + padding, str);
-}
-
-void	add_permissions(char **cursor, char *permissions)
-{
-	ft_strcpy(*cursor, permissions);
-	*cursor += ft_strlen(permissions);
-	*(*cursor)++ = ' ';
-}
-
-void	add_links(char **cursor, char *num_links, size_t offset)
-{
-	fill_spaces_left(*cursor, num_links, offset);
-	*cursor += offset;
-	*(*cursor)++ = ' ';
-}
-
-void	add_owner(char **cursor, char *owner, size_t offset)
-{
-	fill_spaces_right(*cursor, owner, offset);
-	*cursor += offset;
-	*(*cursor)++ = ' ';
-}
-
-void	add_group(char **cursor, char *group, size_t offset)
-{
-	fill_spaces_right(*cursor, group, offset);
-	*cursor += offset;
-	*(*cursor)++ = ' ';
-}
-
-void	add_bytes(char **cursor, char *bytes, size_t offset)
-{
-	fill_spaces_left(*cursor, bytes, offset);
-	*cursor += offset;
-	*(*cursor)++ = ' ';
-}
-
-void	add_date(char **cursor, char *date)
-{
-	ft_strcpy(*cursor, date);
-	*cursor += ft_strlen(date);
-	*(*cursor)++ = ' ';
-}
-
-void	create_line(t_line *line, t_size size)
-{
-	size_t	offset;
-	char	*cursor;
-
-	if (!line || !size.max_line)
-		return ;
-	line->line = protected_memory(ft_calloc(size.max_line + 9, sizeof(char)), \
-		"create_line");
-	cursor = line->line;
-	add_permissions(&cursor, line->permissions);
-	offset = size.max_links;
-	add_links(&cursor, line->num_links, offset);
-	offset = size.max_owner;
-	add_owner(&cursor, line->owner, offset);
-	offset = size.max_group;
-	add_group(&cursor, line->group, offset);
-	offset = size.max_bytes;
-	add_bytes(&cursor, line->bytes, offset);
-	add_date(&cursor, line->date);
-	ft_strcpy(cursor, line->name);
-	print_line(line->line, size.max_line + 8);
-}
-
-
-void	foo(t_flags flags, t_line **line, int limit)
-{
-	t_size	size;
-	int		iter;
-
-	if (flags.long_format == false)
-		return ;
-	iter = 0;
-	ft_bzero(&size, sizeof(size));
-	while (iter < limit)
-	{
-		update_max_lengths(&(*line)[iter], &size);
-		iter++;
-	}
-	iter = 0;
-	while (iter < limit)
-	{
-		create_line(&(*line)[iter], size);
-		if (clear_line(&(*line)[iter]) == false)
-			exit(error_msg(MALLOC, 1, "foo", ""));
-		iter++;
 	}
 }
 
@@ -235,8 +76,7 @@ int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, int count, 
 			free(full_path);
 		++i;
 	}
-	foo(flags, &line, count);
-	free(line);
+	handle_line(flags, &line, count);
 	return (EXIT_SUCCESS);
 }
 

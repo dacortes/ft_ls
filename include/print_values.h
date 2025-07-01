@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 12:09:25 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:33:17 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,17 @@ struct s_line
 	char	*line;
 };
 
-/*	print_values.c	*/
-char	*bool_to_text(unsigned int bool);
-void	printf_value_flag(t_flags *flag);
-short	print_array_files(char **files);
-char	*get_type_dir(int type);
+/*	append_line.c	*/
+void	add_permissions(char **cursor, char *permissions);
+void	add_links(char **cursor, char *num_links, size_t offset);
+void	add_owner(char **cursor, char *owner, size_t offset);
+void	add_group(char **cursor, char *group, size_t offset);
+void	add_bytes(char **cursor, char *bytes, size_t offset);
 
-/*	print_files.c	*/
-char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *line);
-int		print_line(char *line, size_t size);
+/*	create_line.c	*/
+void	create_line(t_line *line, t_size size);
+void	handle_line(t_flags flags, t_line **line, int limit);
+
 /*	get_bytes.c		*/
 char	*get_bytes(long long st_size);
 /*	get_date.c		*/
@@ -71,3 +73,18 @@ char	*get_num_link(unsigned long num_link);
 char	*get_owner(unsigned int uid);
 /*	get_perms.c		*/
 char	*get_format_perms(unsigned int mode);
+
+/*	print_files.c	*/
+char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *line);
+int		print_line(char *line, size_t size);
+
+/*	print_flags.c	*/
+char	*bool_to_text(unsigned int bool);
+void	printf_value_flag(t_flags *flag);
+short	print_array_files(char **files);
+char	*get_type_dir(int type);
+
+/*	utils.c	*/
+void	update_max_lengths(t_line *line, t_size *size);
+void	fill_spaces_right(char *dest, char *str, size_t width);
+void	fill_spaces_left(char *dest, char *str, size_t width);
