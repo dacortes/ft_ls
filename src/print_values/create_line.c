@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:06:34 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 15:43:28 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:11:21 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	create_line(t_line *line, t_size size)
 	size_t	offset;
 	char	*cursor;
 
-	if (!line || !size.max_line)
+	if (!check_struct_line(line) || !size.max_line)
 		return ;
 	line->line = protected_memory(ft_calloc(size.max_line + 9, sizeof(char)), \
 		"create_line");

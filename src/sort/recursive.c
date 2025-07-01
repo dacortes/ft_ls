@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 15:28:19 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:13:42 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	has_flag_all(t_flags flags, char *curr_root_dir, char *curr_dir, t_line *ad
 {
 	char	*full_path;
 
-	if (flags.all == true)
+	if (flags.all == false)
 		return ;
 	full_path = create_full_path(curr_root_dir, curr_dir);
 	get_long_format(flags, full_path, curr_dir, add);
@@ -62,7 +62,8 @@ int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, int count, 
 	line = protected_memory(ft_calloc(sizeof(t_line), count + 1), "depth_loop");
 	while (i < count)
 	{
-		flags.long_format = true;// quitar esta linea	
+		flags.long_format = true;// quitar esta linea
+		flags.all = true; //quitar esta linea
 		if (default_directories(files[i]->d_name, files[i]->d_type))
 		{
 			has_flag_all(flags, curr->entry->d_name, files[i]->d_name, &line[i]);

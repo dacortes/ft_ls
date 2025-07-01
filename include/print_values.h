@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 15:33:17 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:10:54 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ short	print_array_files(char **files);
 char	*get_type_dir(int type);
 
 /*	utils.c	*/
+short	check_struct_line(t_line *line);
 void	update_max_lengths(t_line *line, t_size *size);
 void	fill_spaces_right(char *dest, char *str, size_t width);
 void	fill_spaces_left(char *dest, char *str, size_t width);

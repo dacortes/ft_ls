@@ -6,11 +6,34 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:15:29 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 13:20:42 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:12:30 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "print_values.h"
+
+/**
+ * @brief Checks if the given t_line structure is valid and fully populated.
+ *
+ * This function verifies that the provided pointer to a t_line structure 
+ * is not NULL, and that all required fields within the structure 
+ * (num_links, owner, group, bytes, date, and name)
+ * are present and non-zero/non-NULL. Returns true if all checks pass, 
+ * otherwise false.
+ *
+ * @param line Pointer to the t_line structure to check.
+ * @return short Returns true (non-zero) if the structure is valid, 
+ * 	false (0) otherwise.
+ */
+short	check_struct_line(t_line *line)
+{
+	if (!line)
+		return (false);
+	if(!line->num_links || !line->owner || !line->group || !line->bytes 
+		|| !line->date || !line->name)
+		return (false);
+	return (true);
+}
 
 /**
  * Updates the maximum lengths of various fields in the t_size structure
@@ -32,6 +55,8 @@ void	update_max_lengths(t_line *line, t_size *size)
 {
 	size_t	len;
 
+	if (!check_struct_line(line))
+		return ;
 	len = ft_strlen(line->num_links);
 	if (len > size->max_links)
 		size->max_links = len;
