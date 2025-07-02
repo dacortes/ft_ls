@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:11:32 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/19 17:59:23 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:17:46 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ struct s_stack
 {
 	int		size;
 	int		status;
+	int		count;
 	t_node	*top;
 	t_node	*bot;
 };

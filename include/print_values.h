@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:10:54 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/02 08:40:49 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ void	add_bytes(char **cursor, char *bytes, size_t offset);
 
 /*	create_line.c	*/
 void	create_line(t_line *line, t_size size);
-void	handle_line(t_flags flags, t_line **line, int limit);
+short	handle_line_basic(t_flags flags, t_line **line, int limit);
+short	handle_line_long_format(t_flags flags, t_line **line, int limit);
+short	handle_line(t_flags flags, t_line **line, int limit);
 
 /*	get_bytes.c		*/
 char	*get_bytes(long long st_size);
@@ -76,7 +78,9 @@ char	*get_format_perms(unsigned int mode);
 
 /*	print_files.c	*/
 char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *line);
-int		print_line(char *line, size_t size);
+char	*get_basic_format(t_flags flags, char *path_f, char *name, t_line *add);
+void	get_format(t_flags flags, char *path_f, char *name, t_line *add);
+int		print_line(char *line, char *add, size_t size);
 
 /*	print_flags.c	*/
 char	*bool_to_text(unsigned int bool);

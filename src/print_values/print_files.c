@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 13:03:22 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/02 07:34:45 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ char	*get_long_format(t_flags flags, char *path_f, char *name, t_line *add)
 	return (NULL);
 }
 
+char	*get_basic_format(t_flags flags, char *path_f, char *name, t_line *add)
+{
+	(void)path_f;
+
+	if (flags.long_format == true)
+		return (NULL);
+	add->name = get_name(name);
+	return (NULL);
+}
+
+void	get_format(t_flags flags, char *path_f, char *name, t_line *add)
+{
+	get_basic_format(flags, path_f, name, add);
+	get_long_format(flags, path_f, name, add);
+}
+
 /**
  * @brief Prints a line of text to standard output followed by a newline.
  *
@@ -65,12 +81,19 @@ char	*get_long_format(t_flags flags, char *path_f, char *name, t_line *add)
  * @param size The number of bytes from the line to write.
  * @return EXIT_SUCCESS on success, EXIT_FAILURE if the line pointer is NULL.
  */
-int	print_line(char *line, size_t size)
+int	print_line(char *line, char *add, size_t size)
 {
-	if (!line)
+	char	new_line[2];
+
+	if (!line || !add)
 		return (fd_printf(2, WARNING_POINTER, YELLOW, END, \
 			"printf_flags", "stack"), EXIT_FAILURE);
+	new_line[0] = add[0];
+	new_line[1] = '\n';
 	write(1, line, size);
-	write(1, "\n", 1);
+	if (add[0])
+		write(1, new_line, 2);
+	else
+		write(1, &new_line[1], 1);
 	return (EXIT_SUCCESS);
 }
