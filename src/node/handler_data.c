@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:52:46 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/19 17:59:13 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 17:50:01 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,18 @@
  */
 void	copy_struct_dirent(struct dirent *origin, struct dirent **copy)
 {
+	size_t	len;
+
 	if (!origin)
 		return ;
-	*copy = ft_calloc(sizeof(struct dirent) + ft_strlen(origin->d_name) + 1, 1);
-	if (!copy)
+	len = ft_strlen(origin->d_name);
+	*copy = ft_calloc(1, sizeof(struct dirent) + len + 1);
+	if (!*copy)
 		exit(error_msg(1, MALLOC, "copy_dirent", ""));
-	ft_memcpy(*copy, origin, sizeof(struct dirent));
+	(*copy)->d_ino = origin->d_ino;
+	(*copy)->d_off = origin->d_off;
+	(*copy)->d_reclen = origin->d_reclen;
+	(*copy)->d_type = origin->d_type;
 	ft_strcpy((*copy)->d_name, origin->d_name);
 }
 

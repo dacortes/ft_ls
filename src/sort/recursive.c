@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/03 08:16:49 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:33:22 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,11 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 		print_line(curr->entry->d_name, ":", ft_strlen(curr->entry->d_name));
 		dir = init_dir(curr->entry->d_name);
 		if (!dir)
+		{
+			free(curr->entry);
+			free(curr);
 			continue ;
+		}
 		stack->count = read_dir_entries(dir, &entries);
 		sort_entries(entries, stack->count, flags);
 		depth_loop(flags, stack, entries, curr);

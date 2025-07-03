@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/03 10:40:57 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:09:55 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ char	*get_long_format(t_flags flags, char *path_f, char *name, t_line *add)
 	}
 	if (flags.long_format == false)
 		return (NULL);
-	lstat(path_f, &st);
+	if (lstat(path_f, &st) == ERROR)
+		return (NULL);
 	add->permissions = get_format_perms(st.st_mode);
 	add->num_links = get_num_link(st.st_nlink);
 	add->owner = get_owner(st.st_uid);
@@ -85,16 +86,18 @@ void	get_format(t_flags flags, char *path_f, char *name, t_line *add)
 int	print_line(char *line, char *add, size_t size)
 {
 	char	new_line[2];
+	ssize_t	check;
 
 	if (!line || !add)
 		return (fd_printf(2, WARNING_POINTER, YELLOW, END, \
 			"printf_flags", "stack"), EXIT_FAILURE);
 	new_line[0] = add[0];
 	new_line[1] = '\n';
-	write(1, line, size);
+	(void)check;
+	check = write(1, line, size);
 	if (add[0])
-		write(1, new_line, 2);
+		check = write(1, new_line, 2);
 	else
-		write(1, &new_line[1], 1);
+		check = write(1, &new_line[1], 1);
 	return (EXIT_SUCCESS);
 }
