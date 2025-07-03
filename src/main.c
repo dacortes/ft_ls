@@ -53,7 +53,6 @@ struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
 	struct dirent	**entries;
 	DIR				*dir;
 
-	(void)flags;
 	dir = init_dir(name);
 	if (!dir)
 		return (NULL);
@@ -73,23 +72,18 @@ int main(int ac, char **av)
 	int				size_files;
 	
 	files = NULL;
-	size_files = 0;
-	if (has_flags(&flags, ac, &av[1]) == false && ac == 1)
-	{
-		flags.recursive = true;
+	size_files = get_size_files(&av[1]);
+	if (has_flags(&flags, ac, &av[1]) == false && !size_files)
 		files = curr_directory(flags, "./", &size_files);
-	}
 	else
 	{
-		//hay que tener encuenta si son argumentos listados como parametro de entrada 
-		//si es asi este debe mostrar primero los archivos regurares organizados por el tiempo
-		size_files = get_size_files(&av[1]);
-		files = is_file(flags, &av[1], size_files);
-		if (flags.recursive == true)
-			exec_recursive_flag(flags, files[0]->d_name);
+		if (size_files)
+			files = is_file(flags, &av[1], size_files);
+		else if (!size_files)
+			files = curr_directory(flags, "./", &size_files);
 	}
 	if (!files)
-		return (0);
+		return (EXIT_SUCCESS);
 	print_entries(files, size_files);
 	clear_entries(files, size_files, false);
 	return (EXIT_SUCCESS);

@@ -6,13 +6,14 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 11:02:55 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/29 11:29:54 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 08:20:22 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sort.h"
 #include "errors.h"
 #include "arguments.h"
+#include "print_values.h"
 
 /**
  * get_size_files - Calculates the number of non-flag arguments in a list.
@@ -86,6 +87,19 @@ char	*create_full_path(const char *curr_root_dir, const char *curr_dir)
 	return (full_path);
 }
 
+void	loop_recursive_flag(t_flags flags, struct dirent **files, int sizes)
+{
+	int	iter;
+
+	(void)sizes;
+	iter = 0;
+	while(files[iter])
+	{
+		exec_recursive_flag(flags, files[iter]->d_name);
+		++iter;
+	}
+}
+
 struct dirent	**is_file(t_flags flags, char **args, int sizes)
 {
 	struct dirent	**entries;
@@ -97,5 +111,6 @@ struct dirent	**is_file(t_flags flags, char **args, int sizes)
 	if (add_array_files(args, entries) == EXIT_FAILURE)
 		return (NULL);
 	sort_entries(entries, sizes, flags);
+	loop_recursive_flag(flags, entries, sizes);
 	return (entries);
 }

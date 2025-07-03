@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/02 07:34:45 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:40:57 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*get_long_format(t_flags flags, char *path_f, char *name, t_line *add)
 	add->bytes = get_bytes(st.st_size);
 	add->date = get_date(&st.st_mtime);
 	add->name = get_name(name);
+	add->link_target = get_link(st.st_mode, path_f);
 	return (NULL);
 }
 

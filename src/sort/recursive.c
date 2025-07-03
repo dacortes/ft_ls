@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/02 10:47:41 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 08:16:49 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	has_flag_all(t_flags flags, char *curr_root_dir, char *curr_dir, t_line *ad
 
 int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, t_node *curr)
 {
-	char			*full_path;
-	t_line			*line;
-	int				i;
+	char	*full_path;
+	t_line	*line;
+	int		i;
 
 	i = 0;
 	full_path = NULL;
@@ -63,8 +63,6 @@ int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, t_node *cur
 	stack->count + 1), "depth_loop");
 	while (i < stack->count)
 	{
-		// flags.long_format = true;// quitar esta linea
-		// flags.all = true; //quitar esta linea
 		if (!flags.all && files[i]->d_name[0] == '.')
 		{
 			++i;
@@ -78,7 +76,8 @@ int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, t_node *cur
 		}
 		full_path = create_full_path(curr->entry->d_name, files[i]->d_name);
 		get_format(flags, full_path, files[i]->d_name, &line[i]);
-		add_node_to_stack(stack, files, full_path, i);
+		if (flags.recursive == true)
+			add_node_to_stack(stack, files, full_path, i);
 		if (full_path)
 			free(full_path);
 		++i;

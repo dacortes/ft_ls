@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 15:06:34 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/02 10:36:49 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:09:36 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ void	add_date(char **cursor, char *date)
 	*(*cursor)++ = ' ';
 }
 
+void	add_link_target(char **cursor, char *name, char *link_target)
+{
+	if (!link_target)
+		return ;
+	*cursor += ft_strlen(name);
+	*(*cursor)++ = ' ';
+	ft_strcpy(*cursor, link_target);
+}
+
 /**
  * @brief Creates a formatted line representing file information for display.
  *
@@ -56,11 +65,15 @@ void	create_line(t_line *line, t_size size)
 {
 	size_t	offset;
 	char	*cursor;
+	size_t	len_link;
 
 	if (!check_struct_line(line) || !size.max_line)
 		return ;
-	line->line = protected_memory(ft_calloc(size.max_line + 9, sizeof(char)), \
-		"create_line");
+	len_link = 0;
+	if (line->link_target)
+		len_link = ft_strlen(line->link_target) + 1;
+	line->line = protected_memory(ft_calloc(size.max_line + 9 + len_link, \
+		sizeof(char)), "create_line");
 	cursor = line->line;
 	add_permissions(&cursor, line->permissions);
 	offset = size.max_links;
@@ -73,7 +86,8 @@ void	create_line(t_line *line, t_size size)
 	add_bytes(&cursor, line->bytes, offset);
 	add_date(&cursor, line->date);
 	ft_strcpy(cursor, line->name);
-	print_line(line->line, "", size.max_line + 8);
+	add_link_target(&cursor, line->name, line->link_target);
+	print_line(line->line, "", size.max_line + 8 + len_link);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:53:07 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/17 17:50:26 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/02 13:52:54 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	compare_by_name(const void *a, const void *b)
 
 	entry1 = (struct dirent *)a;
 	entry2 = (struct dirent *)b;
-	return (strcmp(entry1->d_name, entry2->d_name));
 	return (ft_strncmp(entry1->d_name, entry2->d_name, -1));
 }
 

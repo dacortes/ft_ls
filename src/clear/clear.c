@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 10:51:36 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 13:06:46 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:37:47 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ short	clear_line(t_line *line)
 	free(line->bytes);
 	free(line->date);
 	free(line->name);
+	if (line->link_target)
+		free(line->link_target);
 	free(line->line);
 	return (true);
 }

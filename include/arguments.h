@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/06/22 15:33:32 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 08:25:31 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ short			has_flags(t_flags *flags, int num_args, char **args);
 
 /*	file.c	*/
 int				get_size_files(char **args);
+void			loop_recursive_flag(t_flags flags, struct dirent **files, \
+	int sizes);
 struct dirent	**is_file(t_flags flags, char **args, int sizes);
 char			*create_full_path(const char *curr_root_dir, \
 	const char *curr_dir);

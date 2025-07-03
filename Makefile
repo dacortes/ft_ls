@@ -40,10 +40,11 @@ SOURCES = \
 	errors/memory_error.c errors/print_errors.c \
 	print_values/append_line.c print_values/create_line.c \
 	print_values/get_bytes.c print_values/get_date.c \
-	print_values/get_group.c print_values/get_name.c \
-	print_values/get_num_link.c print_values/get_owner.c \
-	print_values/get_perms.c print_values/print_files.c \
-	print_values/print_flags.c print_values/utils.c \
+	print_values/get_group.c print_values/get_link.c \
+	print_values/get_name.c print_values/get_num_link.c \
+	print_values/get_owner.c print_values/get_perms.c \
+	print_values/print_files.c print_values/print_flags.c \
+	print_values/utils.c \
 	node/clear.c node/handler_nodes.c node/handler_data.c \
 	sort/directory.c sort/quicksort.c sort/recursive.c sort/sort_files.c \
 	main.c

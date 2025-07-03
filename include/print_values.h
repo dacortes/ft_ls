@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/02 08:40:49 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:33:42 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ struct s_line
 	char	*bytes;
 	char	*date;
 	char	*name;
+	char	*link_target;
 	char	*line;
 };
 
@@ -67,6 +68,8 @@ char	*get_bytes(long long st_size);
 char	*get_date(time_t *mtime);
 /*	get_group.c		*/
 char	*get_group(unsigned int gid);
+/*	get_link		*/
+char	*get_link(unsigned int mode, char *full_path);
 /*	get_name.c		*/
 char	*get_name(char	*name);
 /*	get_num_link.c	*/
