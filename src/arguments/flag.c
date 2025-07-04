@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:24:59 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/28 17:54:48 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:12:11 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static short	analyze_args(t_flags *flags, int num_args, char **args)
 
 	iter = 0;
 	status = false;
+	flags->args = !!num_args;
 	while (iter < num_args)
 	{
 		if (args[iter] && args[iter][0] && args[iter][0] == '-')

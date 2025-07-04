@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:52:46 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/03 17:50:01 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:22:39 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,38 +110,3 @@ short	default_directories(char *name_file, unsigned char type)
 		|| !ft_strncmp(name_file, "..", -1)));
 }
 
-/**
- * is_directory - Determines the type of a file or directory at a given path.
- * 
- * @node: A double pointer to a t_node structure where file metadata
- * will be stored.
- * @path: A string representing the path to the file or directory to check.
- * 
- * This function uses lstat to retrieve metadata about the file or directory
- * at the specified path and stores it in the `st` field of the t_nod
- * structure.
- * It then checks the file type using macros from <sys/stat.h>:
- * 
- * - If the file is a symbolic link, it returns `dir_link`.
- * - If the file is a directory, it returns `dir`.
- * - Otherwise, it returns `file`.
- * 
- * If lstat fails, an error message is printed using error_msg, and the function
- * returns an error code.
- * 
- * Return:
- * - `dir_link` if the path is a symbolic link.
- * - `dir` if the path is a directory.
- * - `file` if the path is a regular file or another type.
- * - An error code if lstat fails.
- */
-// int	is_directory(t_node **node, char *path)
-// {
-// 	if (lstat(path, &(*node)->st) == ERROR)
-// 		return (error_msg(OPEN_DIR, 2, path, strerror(errno)));
-// 	if (S_ISLNK((*node)->st.st_mode))
-// 		return (dir_link);
-// 	else if (S_ISDIR((*node)->st.st_mode))
-// 		return (dir);
-// 	return (file);
-// }

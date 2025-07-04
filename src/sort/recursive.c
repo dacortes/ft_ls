@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/04 06:39:45 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:08:54 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,28 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 	struct dirent	**entries;
 	t_node			*curr;
 	DIR				*dir;
+	struct stat		st;
 
 	stack->count = 0;
 	entries = NULL;
 	while (stack->size > 0)
 	{
 		curr = copy_node(stack, true);
-		print_line(curr->entry->d_name, ":", ft_strlen(curr->entry->d_name));
+		//esto solo se hace si hay argumentos pasar esto a otra funsion loco
+		if (flags.args == true && lstat(curr->entry->d_name, &st) == -1)
+		{
+			free(curr->entry);
+			free(curr);
+			continue;
+		}
+		if (flags.args == true && !S_ISDIR(st.st_mode))
+		{
+			free(curr->entry);
+			free(curr);
+			continue;
+		}
+		if (S_ISDIR(st.st_mode))
+			print_line(curr->entry->d_name, ":", ft_strlen(curr->entry->d_name));
 		dir = init_dir(curr->entry->d_name);
 		if (!dir)
 		{

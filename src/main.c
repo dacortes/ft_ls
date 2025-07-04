@@ -43,7 +43,7 @@ void	print_entries(struct dirent	**entries, int size)
 	iter = 0;
 	while(iter < size)
 	{
-		ft_printf("%files%s[%d] %s\n", BLUE, END, iter, entries[iter]->d_name);
+		ft_printf("%sfiles%s[%d] %s\n", BLUE, END, iter, entries[iter]->d_name);
 		iter++;
 	}
 }
@@ -83,7 +83,7 @@ int main(int ac, char **av)
 	}
 	if (!files)
 		return (EXIT_SUCCESS);
-	// print_entries(files, size_files);
+	print_entries(files, size_files);
 	clear_entries(files, size_files, false);
 	return (EXIT_SUCCESS);
 }
