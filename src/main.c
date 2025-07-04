@@ -43,7 +43,7 @@ void	print_entries(struct dirent	**entries, int size)
 	iter = 0;
 	while(iter < size)
 	{
-		ft_printf("%sentires%s[%d] %s\n", BLUE, END, iter, entries[iter]->d_name);
+		ft_printf("%files%s[%d] %s\n", BLUE, END, iter, entries[iter]->d_name);
 		iter++;
 	}
 }
@@ -59,8 +59,7 @@ struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
 	entries = NULL;
 	*entry_count = read_dir_entries(dir, &entries);
 	sort_entries(entries, *entry_count, flags);
-	if (flags.recursive == true)
-		exec_recursive_flag(flags, entries[0]->d_name);
+	exec_recursive_flag(flags, entries[0]->d_name);
 	closedir(dir);
 	return (entries);
 }
@@ -84,7 +83,7 @@ int main(int ac, char **av)
 	}
 	if (!files)
 		return (EXIT_SUCCESS);
-	print_entries(files, size_files);
+	// print_entries(files, size_files);
 	clear_entries(files, size_files, false);
 	return (EXIT_SUCCESS);
 }
