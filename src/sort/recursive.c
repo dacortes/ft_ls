@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/07 09:08:49 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:23:34 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, t_node *cur
 		full_path = create_full_path(curr->entry->d_name, files[i]->d_name);
 		get_format(flags, full_path, files[i]->d_name, &line[i]);
 		if (flags.recursive == true)
+		{
 			add_node_to_stack(stack, files, full_path, i);
+		}
 		if (full_path)
 			free(full_path);
 		++i;

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:53:07 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/02 13:52:54 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/07 11:27:41 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	partition_entries(struct dirent **arr, int low, int high, t_flags flags)
 			cmp = compare_by_time((void *)arr[j], (void *)pivot);
 		else
 			cmp = compare_by_name((void *)arr[j], (void *)pivot);
-		if (flags.reverse)
+		if (flags.reverse == false)
 			cmp = -cmp;
 		if (cmp < 0)
 		{
