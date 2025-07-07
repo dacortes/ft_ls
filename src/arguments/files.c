@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 11:02:55 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/04 12:08:33 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/07/07 09:35:30 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,11 @@ int	get_regular_files_number(struct dirent **files, int sizes)
 	while (iter < sizes)
 	{
 		if (lstat(files[iter]->d_name, &st) == -1)
+		{
+			error_msg(OPEN_DIR, 2, files[iter]->d_name, strerror(errno));
+			++iter;
 			continue;
+		}
 		if (!S_ISDIR(st.st_mode))
 			++count;
 		++iter;
