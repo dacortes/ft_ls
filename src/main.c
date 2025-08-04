@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 10:12:18 by dacortes          #+#    #+#             */
-/*   Updated: 2025/08/04 10:29:20 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 17:36:31 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
 	entries = NULL;
 	*entry_count = read_dir_entries(dir, &entries);
 	sort_entries(entries, *entry_count, flags);
-	exec_recursive_flag(flags, entries[0]->d_name);
+	exec_recursive_flag(flags, name);
 	closedir(dir);
 	return (entries);
 }
