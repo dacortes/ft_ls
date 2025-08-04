@@ -6,21 +6,21 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/03 10:33:42 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:23:40 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-# include "arguments.h"
-# include "libft.h"
-# include "global.h"
-# include "ft_printf.h"
+#include "arguments.h"
+#include "libft.h"
+#include "global.h"
+#include "ft_printf.h"
 
-# include <grp.h>
-# include <pwd.h>
-# include <time.h>
-# include <dirent.h>
+#include <grp.h>
+#include <pwd.h>
+#include <time.h>
+#include <dirent.h>
 
 typedef struct s_size			t_size;
 typedef struct s_line			t_line;
@@ -80,7 +80,8 @@ char	*get_owner(unsigned int uid);
 char	*get_format_perms(unsigned int mode);
 
 /*	print_files.c	*/
-char	*get_long_format(t_flags flags, char *path_file, char *name, t_line *line);
+char	*get_long_format(t_flags flags, char *path_file, char *name, \
+	t_line *line);
 char	*get_basic_format(t_flags flags, char *path_f, char *name, t_line *add);
 void	get_format(t_flags flags, char *path_f, char *name, t_line *add);
 int		print_line(char *line, char *add, size_t size);

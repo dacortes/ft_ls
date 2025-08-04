@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:10:50 by dacortes          #+#    #+#             */
-/*   Updated: 2025/05/28 17:54:22 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:21:06 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@
 /*                            COLORS                                          */
 /******************************************************************************/
 
-# define END	"\033[m"
-# define RED	"\033[1;31m"
-# define GREEN	"\033[1;32m"
-# define YELLOW	"\033[1;33m"
-# define BLUE	"\033[1;34m"
-# define TUR	"\033[1;35m"
-# define CYAN	"\033[1;36m"
-# define ORANGE	"\033[38;5;208m"
-# define PURPLE	"\033[38;5;128m"
+#define END	"\033[m"
+#define RED	"\033[1;31m"
+#define GREEN	"\033[1;32m"
+#define YELLOW	"\033[1;33m"
+#define BLUE	"\033[1;34m"
+#define TUR	"\033[1;35m"
+#define CYAN	"\033[1;36m"
+#define ORANGE	"\033[38;5;208m"
+#define PURPLE	"\033[38;5;128m"
 
 /* error messages */
-# define FT_LS "\033[1;31mft_ls: \033[m"
-# define ERR_MALLOC "%serror trying to allocate memory `%s'\n"
-# define ERR_INVALID "%sinvalid option -- '%s'\n"
-# define ERR_OPEN "%scannot open directory '%s':%s\n"
-# define WARNING_POINTER "%sWarning%s: func: %s pointer %s are null\n"
+#define FT_LS "\033[1;31mft_ls: \033[m"
+#define ERR_MALLOC "%serror trying to allocate memory `%s'\n"
+#define ERR_INVALID "%sinvalid option -- '%s'\n"
+#define ERR_OPEN "%scannot open directory '%s':%s\n"
+#define WARNING_POINTER "%sWarning%s: func: %s pointer %s are null\n"
 
 /******************************************************************************/
 /*                            STRUCTURES                                      */

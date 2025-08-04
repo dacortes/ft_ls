@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/07 10:23:34 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:09:19 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 	while (stack->size > 0)
 	{
 		curr = copy_node(stack, true);
-		//esto solo se hace si hay argumentos pasar esto a otra funsion loco
 		if (flags.args == true && lstat(curr->entry->d_name, &st) == -1)
 		{
 			free(curr->entry);

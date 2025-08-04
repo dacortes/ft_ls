@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/04 11:11:00 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:19:16 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,4 @@ char			*create_full_path(const char *curr_root_dir, \
 /*	entries.c	*/
 DIR				*init_dir(char *file);
 short			is_readdir(struct dirent **entry, DIR *dir);
-int				read_dir_entries(DIR *dir, struct  dirent ***entries);
+int				read_dir_entries(DIR *dir, struct dirent ***entries);

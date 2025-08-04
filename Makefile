@@ -25,7 +25,7 @@ ITALIC = \033[3m
 NAME = ft_ls
 CC = gcc
 RMV = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address # -O3
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address # -O3
 
 TOTAL_FILES = $(words $(SOURCES))
 

@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:11:32 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:17:46 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:22:48 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ typedef struct s_stack			t_stack;
 
 struct s_node
 {
-	// struct	stat st;
-	struct	dirent *entry;
-	t_node	*next;
-	t_node	*prev;
+	struct dirent	*entry;
+	t_node			*next;
+	t_node			*prev;
 };
 
 struct s_stack
@@ -48,7 +47,7 @@ struct s_stack
 /*	clear.c	*/
 short	clear_stack(t_stack *stack);
 /*	handler_data.c	*/
-void	copy_struct_dirent(struct dirent	*origin, struct dirent	**copy);
+void	copy_struct_dirent(struct dirent *origin, struct dirent **copy);
 short	init_struct_dirent(t_node **node, DIR *dir, char *file);
 short	default_directories(char *name_file, unsigned char type);
 // int		is_directory(t_node **node, char *path);

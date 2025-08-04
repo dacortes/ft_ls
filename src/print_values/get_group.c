@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:44:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 12:13:50 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:03:34 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ char	*get_group(unsigned int gid)
 	struct group	*gr;
 
 	gr = getgrgid(gid);
+	if (!gr || !gr->gr_name)
+		return (NULL);
 	return (protected_memory(ft_strdup(gr->gr_name), "get_group"));
 }

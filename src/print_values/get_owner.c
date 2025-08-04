@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:40:01 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 12:18:35 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:02:51 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ char	*get_owner(unsigned int uid)
 	struct passwd	*pw;
 
 	pw = getpwuid(uid);
+	if (!pw || !pw->pw_name)
+		return (NULL);
 	return (protected_memory(ft_strdup(pw->pw_name), "get_user"));
 }

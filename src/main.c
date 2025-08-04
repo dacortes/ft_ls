@@ -1,57 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 10:12:18 by dacortes          #+#    #+#             */
+/*   Updated: 2025/08/04 10:18:02 by dacortes         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "clear.h"
 #include "errors.h"
 #include "arguments.h"
 #include "print_values.h"
 #include "sort.h"
-
-
-/*
-	◦ write
-	◦ opendir
-	◦ readdir
-	◦ closedir
-	◦ stat
-	◦ lstat
-	◦ getpwuid
-	◦ getgrgid
-	◦ listxattr
-	◦ getxattr
-	◦ time
-	◦ ctime
-	◦ readlink
-	◦ malloc
-	◦ free
-	◦ perror
-	◦ strerror
-	◦ exit
-*/
-
 #include <pwd.h>
 #include <string.h>
 #include <sys/stat.h>
 
-void	print_entries(struct dirent	**entries, int size)
+void print_entries(struct dirent **entries, int size)
 {
-	int	iter;
+	int iter;
 
 	if (!size || !entries || !*entries)
 	{
-		fd_printf(2, WARNING_POINTER, YELLOW, END, \
-			"print_entries", "files");
-		return ;
+		fd_printf(2, WARNING_POINTER, YELLOW, END,
+				  "print_entries", "files");
+		return;
 	}
 	iter = 0;
-	while(iter < size)
+	while (iter < size)
 	{
 		ft_printf("%sfiles%s[%d] %s\n", BLUE, END, iter, entries[iter]->d_name);
 		iter++;
 	}
 }
 
-struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
+struct dirent **curr_directory(t_flags flags, char *name, int *entry_count)
 {
-	struct dirent	**entries;
-	DIR				*dir;
+	struct dirent **entries;
+	DIR *dir;
 
 	dir = init_dir(name);
 	if (!dir)
@@ -66,10 +55,10 @@ struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
 
 int main(int ac, char **av)
 {
-	struct dirent	**files;
-	t_flags			flags;
-	int				size_files;
-	
+	struct dirent **files;
+	t_flags flags;
+	int size_files;
+
 	files = NULL;
 	size_files = get_size_files(&av[1]);
 	if (has_flags(&flags, ac, &av[1]) == false && !size_files)
@@ -83,7 +72,6 @@ int main(int ac, char **av)
 	}
 	if (!files)
 		return (EXIT_SUCCESS);
-	print_entries(files, size_files);
 	clear_entries(files, size_files, false);
 	return (EXIT_SUCCESS);
 }
