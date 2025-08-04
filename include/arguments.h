@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 12:13:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/08/04 10:19:16 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:13:14 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "global.h"
 #include "ft_printf.h"
+#include "print_values.h"
 
 #include <errno.h>
 #include <string.h>
@@ -26,6 +27,7 @@
 /******************************************************************************/
 
 typedef struct s_flags			t_flags;
+typedef struct s_line			t_line;
 
 struct s_flags
 {
@@ -55,3 +57,8 @@ char			*create_full_path(const char *curr_root_dir, \
 DIR				*init_dir(char *file);
 short			is_readdir(struct dirent **entry, DIR *dir);
 int				read_dir_entries(DIR *dir, struct dirent ***entries);
+
+/*	utils.c		*/
+int				get_regular_files_number(struct dirent **files, int sizes);
+void			get_regular(t_flags flags, struct dirent **fls, int sizes, \
+	t_line **ln);

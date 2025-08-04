@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 15:13:48 by dacortes          #+#    #+#             */
-/*   Updated: 2025/08/04 10:23:40 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:15:21 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct s_size			t_size;
 typedef struct s_line			t_line;
+typedef struct s_flags			t_flags;
 
 struct s_size
 {
@@ -58,9 +59,6 @@ void	add_bytes(char **cursor, char *bytes, size_t offset);
 
 /*	create_line.c	*/
 void	create_line(t_line *line, t_size size);
-short	handle_line_basic(t_flags flags, t_line **line, int limit);
-short	handle_line_long_format(t_flags flags, t_line **line, int limit);
-short	handle_line(t_flags flags, t_line **line, int limit);
 
 /*	get_bytes.c		*/
 char	*get_bytes(long long st_size);
@@ -85,12 +83,18 @@ char	*get_long_format(t_flags flags, char *path_file, char *name, \
 char	*get_basic_format(t_flags flags, char *path_f, char *name, t_line *add);
 void	get_format(t_flags flags, char *path_f, char *name, t_line *add);
 int		print_line(char *line, char *add, size_t size);
+void	print_regular_files(t_flags flags, struct dirent **files, int sizes);
 
 /*	print_flags.c	*/
 char	*bool_to_text(unsigned int bool);
 void	printf_value_flag(t_flags *flag);
 short	print_array_files(char **files);
 char	*get_type_dir(int type);
+
+/*	handle_line.c	*/
+short	handle_line_basic(t_flags flags, t_line **line, int limit);
+short	handle_line_long_format(t_flags flags, t_line **line, int limit);
+short	handle_line(t_flags flags, t_line **line, int limit);
 
 /*	utils.c	*/
 short	check_struct_line(t_line *line);

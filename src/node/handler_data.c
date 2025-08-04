@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 09:52:46 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/04 10:22:39 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:14:52 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,3 @@ short	default_directories(char *name_file, unsigned char type)
 	return (type == DT_DIR && (!ft_strncmp(name_file, ".", -1) \
 		|| !ft_strncmp(name_file, "..", -1)));
 }
-

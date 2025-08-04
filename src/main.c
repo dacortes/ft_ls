@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 10:12:18 by dacortes          #+#    #+#             */
-/*   Updated: 2025/08/04 10:18:02 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:29:20 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 #include <string.h>
 #include <sys/stat.h>
 
-void print_entries(struct dirent **entries, int size)
+void	print_entries(struct dirent **entries, int size)
 {
-	int iter;
+	int	iter;
 
 	if (!size || !entries || !*entries)
 	{
 		fd_printf(2, WARNING_POINTER, YELLOW, END,
-				  "print_entries", "files");
-		return;
+			"print_entries", "files");
+		return ;
 	}
 	iter = 0;
 	while (iter < size)
@@ -37,10 +37,10 @@ void print_entries(struct dirent **entries, int size)
 	}
 }
 
-struct dirent **curr_directory(t_flags flags, char *name, int *entry_count)
+struct dirent	**curr_directory(t_flags flags, char *name, int *entry_count)
 {
-	struct dirent **entries;
-	DIR *dir;
+	struct dirent	**entries;
+	DIR				*dir;
 
 	dir = init_dir(name);
 	if (!dir)
@@ -53,11 +53,11 @@ struct dirent **curr_directory(t_flags flags, char *name, int *entry_count)
 	return (entries);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	struct dirent **files;
-	t_flags flags;
-	int size_files;
+	struct dirent	**files;
+	t_flags			flags;
+	int				size_files;
 
 	files = NULL;
 	size_files = get_size_files(&av[1]);

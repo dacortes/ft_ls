@@ -36,6 +36,7 @@ DIRECTORY_SRC = src
 SUB_DIRECTORIES = arguments clear errors node print_values sort
 SOURCES = \
 	arguments/entries.c arguments/files.c arguments/flag.c \
+	arguments/utils.c \
 	clear/clear.c \
 	errors/memory_error.c errors/print_errors.c \
 	print_values/append_line.c print_values/create_line.c \
@@ -44,7 +45,7 @@ SOURCES = \
 	print_values/get_name.c print_values/get_num_link.c \
 	print_values/get_owner.c print_values/get_perms.c \
 	print_values/print_files.c print_values/print_flags.c \
-	print_values/utils.c \
+	print_values/handle_line.c print_values/utils.c \
 	node/clear.c node/handler_nodes.c node/handler_data.c \
 	sort/directory.c sort/quicksort.c sort/recursive.c sort/sort_files.c \
 	main.c

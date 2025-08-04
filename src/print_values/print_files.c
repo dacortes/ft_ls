@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/04 10:37:15 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:04:38 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,21 @@ int	print_line(char *line, char *add, size_t size)
 	else
 		check = write(1, &new_line[1], 1);
 	return (EXIT_SUCCESS);
+}
+
+void	print_regular_files(t_flags flags, struct dirent **files, int sizes)
+{
+	t_line	*lines;
+	int		file_count;
+
+	if (flags.args == false)
+		return ;
+	file_count = get_regular_files_number(files, sizes);
+	if (!file_count)
+		return ;
+	lines = protected_memory(ft_calloc(file_count + 1, sizeof(t_line)), \
+		"print_regular_files");
+	get_regular(flags, files, sizes, &lines);
+	handle_line(flags, &lines, file_count);
+	ft_printf("\n");
 }

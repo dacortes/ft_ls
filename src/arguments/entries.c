@@ -6,13 +6,14 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:07:19 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/07 09:32:53 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:55:30 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node.h"
 #include "errors.h"
 #include "arguments.h"
+#include "print_values.h"
 
 /**
  * init_dir - Opens a directory stream for the specified file path.
