@@ -48,6 +48,7 @@ SOURCES = \
 	print_values/handle_line.c print_values/utils.c \
 	node/clear.c node/handler_nodes.c node/handler_data.c \
 	sort/directory.c sort/quicksort.c sort/recursive.c sort/sort_files.c \
+	sort/utils.c \
 	main.c
 
 INCLUDES = $(addprefix -I, ./include)

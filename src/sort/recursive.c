@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:59:45 by dacortes          #+#    #+#             */
-/*   Updated: 2025/08/04 10:09:19 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:44:28 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	add_node_to_stack(t_stack *stack, struct dirent **files, char *path, int i)
 	t_node	*add;
 
 	if (!files || !*files)
-		return  (fd_printf(2, WARNING_POINTER, YELLOW, END, \
+		return (fd_printf(2, WARNING_POINTER, YELLOW, END, \
 		"add_node_to_stack", "files"), EXIT_FAILURE);
 	add = NULL;
 	if (files[i]->d_type == DT_DIR)
@@ -36,56 +36,34 @@ int	add_node_to_stack(t_stack *stack, struct dirent **files, char *path, int i)
 	return (EXIT_SUCCESS);
 }
 
-void	has_flag_all(t_flags flags, char *curr_root_dir, char *curr_dir, t_line *add)
+int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, \
+	t_node *curr)
 {
 	char	*full_path;
-
-	if (flags.all == false)
-		return ;
-	full_path = create_full_path(curr_root_dir, curr_dir);
-	get_format(flags, full_path, curr_dir, add);
-	if (full_path)
-	{
-		free(full_path);
-		full_path = NULL;
-	}
-}
-
-int	depth_loop(t_flags flags, t_stack *stack, struct dirent **files, t_node *curr)
-{
-	char	*full_path;
-	t_line	*line;
+	t_line	*ln;
 	int		i;
 
-	i = 0;
+	i = -1;
 	full_path = NULL;
-	line = protected_memory(ft_calloc(sizeof(t_line), \
-	stack->count + 1), "depth_loop");
-	while (i < stack->count)
+	ln = protected_memory(ft_calloc(sizeof(t_line), stack->count + 1), "dp_");
+	while ((++i) < stack->count)
 	{
-		if (!flags.all && files[i]->d_name[0] == '.')
-		{
-			++i;
-			continue;
-		}
+		if (ignore_current_dir(flags, files, &i))
+			continue ;
 		if (default_directories(files[i]->d_name, files[i]->d_type))
 		{
-			has_flag_all(flags, curr->entry->d_name, files[i]->d_name, &line[i]);
+			has_flag_all(flags, curr->entry->d_name, files[i]->d_name, &ln[i]);
 			++i;
 			continue ;
 		}
 		full_path = create_full_path(curr->entry->d_name, files[i]->d_name);
-		get_format(flags, full_path, files[i]->d_name, &line[i]);
+		get_format(flags, full_path, files[i]->d_name, &ln[i]);
 		if (flags.recursive == true)
-		{
 			add_node_to_stack(stack, files, full_path, i);
-		}
 		if (full_path)
 			free(full_path);
-		++i;
 	}
-	handle_line(flags, &line, stack->count);
-	return (EXIT_SUCCESS);
+	return (handle_line(flags, &ln, stack->count), EXIT_SUCCESS);
 }
 
 short	loop_recursive(t_flags flags, t_stack *stack)
@@ -100,27 +78,8 @@ short	loop_recursive(t_flags flags, t_stack *stack)
 	while (stack->size > 0)
 	{
 		curr = copy_node(stack, true);
-		if (flags.args == true && lstat(curr->entry->d_name, &st) == -1)
-		{
-			free(curr->entry);
-			free(curr);
-			continue;
-		}
-		if (flags.args == true && !S_ISDIR(st.st_mode))
-		{
-			free(curr->entry);
-			free(curr);
-			continue;
-		}
-		if (S_ISDIR(st.st_mode))
-			print_line(curr->entry->d_name, ":", ft_strlen(curr->entry->d_name));
-		dir = init_dir(curr->entry->d_name);
-		if (!dir)
-		{
-			free(curr->entry);
-			free(curr);
+		if (select_state(flags, &curr, &st, &dir))
 			continue ;
-		}
 		stack->count = read_dir_entries(dir, &entries);
 		sort_entries(entries, stack->count, flags);
 		depth_loop(flags, stack, entries, curr);
