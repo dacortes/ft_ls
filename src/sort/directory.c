@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 09:06:25 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/03 18:48:02 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:23:56 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static time_t	swap_time(struct stat file_stat, time_t *latest, char *path)
 {
-	time_t subdir_mtime;
+	time_t	subdir_mtime;
 
 	subdir_mtime = 0;
 	if (file_stat.st_ctime > *latest)
@@ -48,7 +48,7 @@ time_t	get_latest_mtime(const char *dir_name)
 		if (lstat(full_path, &file_stat) == ERROR)
 		{
 			free(full_path);
-			continue;
+			continue ;
 		}
 		swap_time(file_stat, &latest_mtime, full_path);
 		free(full_path);
@@ -58,8 +58,8 @@ time_t	get_latest_mtime(const char *dir_name)
 
 int	dirs_same_time(struct stat stat1, struct stat stat2, char *dir1, char *dir2)
 {
-	time_t latest1;
-	time_t latest2;
+	time_t	latest1;
+	time_t	latest2;
 
 	if (S_ISDIR(stat1.st_mode) && S_ISDIR(stat2.st_mode))
 	{

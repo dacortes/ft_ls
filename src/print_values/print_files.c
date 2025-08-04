@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 10:56:35 by dacortes          #+#    #+#             */
-/*   Updated: 2025/08/04 11:04:38 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:22:12 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*get_long_format(t_flags flags, char *path_f, char *name, t_line *add)
 char	*get_basic_format(t_flags flags, char *path_f, char *name, t_line *add)
 {
 	(void)path_f;
-
 	if (flags.long_format == true)
 		return (NULL);
 	add->name = get_name(name);

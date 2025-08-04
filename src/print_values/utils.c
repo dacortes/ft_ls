@@ -6,7 +6,7 @@
 /*   By: dacortes <dacortes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 13:15:29 by dacortes          #+#    #+#             */
-/*   Updated: 2025/07/01 16:12:30 by dacortes         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:23:13 by dacortes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ short	check_struct_line(t_line *line)
 {
 	if (!line)
 		return (false);
-	if(!line->num_links || !line->owner || !line->group || !line->bytes 
+	if (!line->num_links || !line->owner || !line->group || !line->bytes \
 		|| !line->date || !line->name)
 		return (false);
 	return (true);
